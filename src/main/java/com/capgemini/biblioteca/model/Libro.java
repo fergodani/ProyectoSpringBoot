@@ -22,7 +22,7 @@ public class Libro {
 	private TipoLibro tipoLibro;
 	
 	@Column
-	private int año;
+	private int anyo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "autor_id")
@@ -55,6 +55,12 @@ public class Libro {
 		this.titulo = titulo;
 	}
 
+	@Override
+	public String toString() {
+		return "Libro [id=" + id + ", titulo=" + titulo + ", tipoLibro=" + tipoLibro + ", año=" + anyo + ", autor="
+				+ autor + ", copias=" + copias + "]";
+	}
+
 	public TipoLibro getTipoLibro() {
 		return tipoLibro;
 	}
@@ -63,12 +69,12 @@ public class Libro {
 		this.tipoLibro = tipoLibro;
 	}
 
-	public int getAño() {
-		return año;
+	public int getAnyo() {
+		return anyo;
 	}
 
-	public void setAño(int año) {
-		this.año = año;
+	public void setAnyo(int año) {
+		this.anyo = año;
 	}
 
 	public Autor getAutor() {

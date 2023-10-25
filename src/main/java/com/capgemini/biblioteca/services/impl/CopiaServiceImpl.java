@@ -16,11 +16,10 @@ public class CopiaServiceImpl implements CopiaService {
 	@Autowired
 	private CopiaRepository copiaRepository;
 
-
 	@Override
 	public Copia getEntityById(long id) {
 		Optional<Copia> copia = this.copiaRepository.findById(id);
-		if(copia.isPresent())
+		if (copia.isPresent())
 			return copia.get();
 		else
 			throw new RuntimeException("No se encuentra el autor con id: " + id);
@@ -29,23 +28,29 @@ public class CopiaServiceImpl implements CopiaService {
 
 	@Override
 	public List<Copia> findAll() {
-		
+
 		return this.copiaRepository.findAll();
+	}
+
+	@Override
+	public List<Copia> findCopiasByLibroId(long id) {
+		return this.copiaRepository.findByLibroId(id);
 	}
 
 	@Override
 	public void saveEntity(Copia copia) {
 		this.copiaRepository.save(copia);
-		
+
 	}
 
 	@Override
 	public void deleteEntity(long id) {
 		Optional<Copia> copia = this.copiaRepository.findById(id);
-		if(copia.isPresent())
+		if (copia.isPresent())
 			this.copiaRepository.deleteById(id);
 		else
 			throw new RuntimeException("No se encuentra el autor con id: " + id);
-		
+
 	}
+
 }

@@ -1,4 +1,4 @@
-package com.capgemini.biblioteca.controller;
+package com.capgemini.biblioteca.controllers;
 
 import java.util.List;
 
@@ -23,8 +23,9 @@ public class AutorController {
 	private AutorService autorService;
 	
 	@GetMapping("/autores/{id}") //http://localhost:8080/users/id/2 se invocara asi
-	public String getLectorById(@PathVariable("id") long id) {
-		Autor autor=  autorService.getEntityById(id);
+	public String getAutorById(@PathVariable("id") long id, Model model) {
+		Autor autor =  autorService.getEntityById(id);
+		model.addAttribute("autor", autor);
 		return "detalles_autor";
 	}
 		

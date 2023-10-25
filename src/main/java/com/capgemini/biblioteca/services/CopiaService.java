@@ -9,6 +9,8 @@ public interface CopiaService {
 	Copia getEntityById(long id);
 
 	List<Copia> findAll();
+	
+	List<Copia> findCopiasByLibroId(long id);
 
 	void saveEntity(Copia copia);
 

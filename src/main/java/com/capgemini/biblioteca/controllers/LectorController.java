@@ -1,4 +1,4 @@
-package com.capgemini.biblioteca.controller;
+package com.capgemini.biblioteca.controllers;
 
 import java.util.List;
 
