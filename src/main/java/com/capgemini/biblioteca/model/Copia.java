@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -32,17 +33,6 @@ public class Copia {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "libro_id")
 	private Libro libro;
-	
-	@ManyToMany(mappedBy = "copias")
-	private Set<Lector> lectores;
-
-	public Set<Lector> getLectores() {
-		return lectores;
-	}
-
-	public void setLectores(Set<Lector> lectores) {
-		this.lectores = lectores;
-	}
 
 	public Long getId() {
 		return id;

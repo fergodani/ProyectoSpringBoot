@@ -2,6 +2,8 @@ package com.capgemini.biblioteca.model;
 
 import java.util.Set;
 
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -11,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -33,15 +36,23 @@ public class Lector {
 	@Column
 	private String direccion;
 	
-	@ManyToMany(mappedBy = "lectores")
-	@JoinTable(
-		        name = "prestamos", // Nombre de la tabla intermedia
-		        joinColumns = @JoinColumn(name = "lector_id"), // Columna que hace referencia a Autor
-		        inverseJoinColumns = @JoinColumn(name = "copia_id") // Columna que hace referencia a Libro
-		    )
-	private Set<Copia> copias;
+	@OneToMany(mappedBy = "lector", targetEntity = Prestamo.class)
+	private Set<Prestamo> prestamos;
 	
+	
+	public Multa getMulta() {
+		return multa;
+	}
+
+	public void setMulta(Multa multa) {
+		this.multa = multa;
+	}
+
 	@Embedded
+	@AttributeOverrides({
+		@AttributeOverride(name="fInicio", column = @Column(name="inicio_multa")),
+		@AttributeOverride(name="fFin", column = @Column(name="fin_multa"))
+	})
 	private Multa multa;
 
 	public Long getId() {
@@ -84,12 +95,12 @@ public class Lector {
 		this.direccion = direccion;
 	}
 
-	public Set<Copia> getPrestamos() {
-		return copias;
+	public Set<Prestamo> getPrestamos() {
+		return prestamos;
 	}
 
-	public void setPrestamos(Set<Copia> prestamos) {
-		this.copias = prestamos;
+	public void setPrestamos(Set<Prestamo> prestamos) {
+		this.prestamos = prestamos;
 	}
 
 }
