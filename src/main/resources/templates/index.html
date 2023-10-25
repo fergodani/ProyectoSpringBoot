@@ -16,10 +16,10 @@
 				<h5 th:text="${libro.titulo}" class="card-title"></h5>
 				<p th:text="${libro.tipoLibro}" class="card-text"></p>
 				<p class="card-text">[[${libro.anyo}]]</p>
-				
+				<!-- <p th:text="${obtenerNombreAutor(libro.autor_id)}" class="card-text"></p> -->
 				<a th:href="@{'/libros/' + ${libro.id}}" class="btn btn-primary">Detalles</a>
 			</div>
-		</div>
+			</div>
 	</section>
 </body>
 

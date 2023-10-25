@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.capgemini.biblioteca.model.Autor;
-import com.capgemini.biblioteca.model.Lector;
 import com.capgemini.biblioteca.services.AutorService;
 
 
@@ -22,7 +21,7 @@ public class AutorController {
 	@Autowired
 	private AutorService autorService;
 	
-	@GetMapping("/autores/{id}") //http://localhost:8080/users/id/2 se invocara asi
+	@GetMapping("/autores/{id}") 
 	public String getAutorById(@PathVariable("id") long id, Model model) {
 		Autor autor =  autorService.getEntityById(id);
 		model.addAttribute("autor", autor);
