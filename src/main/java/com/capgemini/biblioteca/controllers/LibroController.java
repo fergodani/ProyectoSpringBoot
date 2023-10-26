@@ -30,15 +30,6 @@ public class LibroController {
 	@Autowired
 	private CopiaService copiaService;
 	
-//	@GetMapping("/obtenerAutor")
-//	public String obtenerNombreAutor(Long autorId) {
-//		Autor autor = autorService.getEntityById(autorId); 
-//		if (autor != null) {
-//			return autor.getNombre(); 
-//		} else {
-//			return "Nombre del Autor No Encontrado"; 
-//		}
-//	}
 		
 	@GetMapping("/")
 	public String getIndex() {
@@ -67,6 +58,9 @@ public class LibroController {
 	@GetMapping("/libros")
 	public String getLibros(Model model) {
 		List<Libro> libros = this.libroService.findAll();
+		for (Libro libro : libros) {
+			System.out.println(libro.toString());
+		}
 		model.addAttribute("listaLibros", libros);
 		return "index";
 	}
