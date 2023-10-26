@@ -29,10 +29,16 @@
 				</li>
 			</ul>
 		</div>
-		<form class="" th:action="@{/logout}" method="post">
+		<form class="" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
 			<input class="btn btn-primary" type="submit" value="Cerrar Sesión" />
 		</form>
 	</nav>
+	<div sec:authorize="hasRole('ADMIN')">
+    Autenticado como Administrador
+</div>
+<div sec:authorize="hasRole('LECTOR')">
+    Autenticado como Lector
+</div>
 	<div th:if="${error != null}">
 		<div class="alert alert-danger" role="alert">
 			<p>[[${error}]]</p>
