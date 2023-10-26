@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.capgemini.biblioteca.model.Autor;
 import com.capgemini.biblioteca.model.Copia;
+import com.capgemini.biblioteca.model.Lector;
 import com.capgemini.biblioteca.model.Libro;
+import com.capgemini.biblioteca.model.Prestamo;
 import com.capgemini.biblioteca.services.AutorService;
 import com.capgemini.biblioteca.services.CopiaService;
+import com.capgemini.biblioteca.services.LectorService;
 import com.capgemini.biblioteca.services.LibroService;
 @Controller
 public class LibroController {
@@ -30,6 +33,9 @@ public class LibroController {
 	@Autowired
 	private CopiaService copiaService;
 	
+	@Autowired
+	private LectorService lectorService;
+	
 		
 	@GetMapping("/")
 	public String getIndex() {
@@ -40,9 +46,13 @@ public class LibroController {
 	@GetMapping("/libros/{id}") 
 	public String getLibroById(@PathVariable("id") long id, Model model) {
 		Libro libro=  libroService.getEntityById(id);
+		Prestamo prestamo = new Prestamo();
 		List<Copia> copias = this.copiaService.findCopiasByLibroId(id);
+		List<Lector> lectores = this.lectorService.findAll();
 		model.addAttribute("libro", libro);
 		model.addAttribute("numCopias", copias.size());
+		model.addAttribute("lectores", lectores);
+		model.addAttribute("prestamo", prestamo);
 		return "detallesLibro";
 	}
 	
@@ -58,9 +68,6 @@ public class LibroController {
 	@GetMapping("/libros")
 	public String getLibros(Model model) {
 		List<Libro> libros = this.libroService.findAll();
-		for (Libro libro : libros) {
-			System.out.println(libro.toString());
-		}
 		model.addAttribute("listaLibros", libros);
 		return "index";
 	}
@@ -77,5 +84,10 @@ public class LibroController {
 	{
 		libroService.deleteEntity(id);
 		return "index";
+	}
+	
+	@GetMapping("/error")
+	public String getError() {
+		return "error";
 	}
 }

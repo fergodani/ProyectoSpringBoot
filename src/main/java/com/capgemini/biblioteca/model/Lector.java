@@ -22,10 +22,7 @@ public class Lector {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@Column
-	private String nSocio;
+	private long nSocio;
 	
 	@Column
 	private String nombre;
@@ -55,19 +52,11 @@ public class Lector {
 	})
 	private Multa multa;
 
-	public Long getId() {
-		return id;
+	public Long getNSocio() {
+		return this.nSocio;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getnSocio() {
-		return nSocio;
-	}
-
-	public void setnSocio(String nSocio) {
+	public void setNSocio(Long nSocio) {
 		this.nSocio = nSocio;
 	}
 

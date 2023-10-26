@@ -6,7 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capgemini.biblioteca.model.Copia;
 import com.capgemini.biblioteca.model.Libro;
+import com.capgemini.biblioteca.model.enums.EstadoCopia;
+import com.capgemini.biblioteca.repositories.CopiaRepository;
 import com.capgemini.biblioteca.repositories.LibroRepository;
 import com.capgemini.biblioteca.services.LibroService;
 
@@ -15,6 +18,9 @@ public class LibroServiceImpl implements LibroService {
 
 	@Autowired
 	private LibroRepository libroRepository;
+	
+	@Autowired
+	private CopiaRepository copiaRepository;
 
 	@Override
 	public Libro getEntityById(long id) {
@@ -35,7 +41,10 @@ public class LibroServiceImpl implements LibroService {
 	@Override
 	public void saveEntity(Libro libro) {
 		this.libroRepository.save(libro);
-		
+		Copia copia = new Copia();
+		copia.setEstadoCopia(EstadoCopia.BIBLIOTECA);
+		copia.setLibro(libro);
+		this.copiaRepository.save(copia);
 	}
 
 	@Override

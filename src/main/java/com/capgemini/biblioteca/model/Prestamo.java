@@ -2,6 +2,8 @@ package com.capgemini.biblioteca.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,6 +18,11 @@ import jakarta.persistence.Table;
 @Table(name="prestamos")
 public class Prestamo {
 
+	@Override
+	public String toString() {
+		return "Prestamo [id=" + id + ", copia=" + copia + ", lector=" + lector + ", inicio=" + inicio + ", fin=" + fin
+				+ "]";
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
@@ -29,8 +36,11 @@ public class Prestamo {
 	private Lector lector;
 	
 	@Column
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date inicio;
+	
 	@Column
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fin;
 	
 	public long getId() {

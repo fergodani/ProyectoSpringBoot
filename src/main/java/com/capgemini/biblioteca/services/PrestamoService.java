@@ -10,7 +10,7 @@ public interface PrestamoService {
 
 	List<Prestamo> findAll();
 
-	void saveEntity(Prestamo prestamo);
+	void saveEntity(Prestamo prestamo, long id);
 
 	void deleteEntity(long id);
 }
