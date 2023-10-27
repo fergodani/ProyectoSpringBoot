@@ -37,7 +37,7 @@ public class PrestamoController {
 		}
 		List<Prestamo> prestamos = this.prestamoService.findByLectorId(lector_id);
 		model.addAttribute("prestamos", prestamos);
-		return "listaPrestamos";
+		return "lector/listaPrestamos";
 	}
 
 	@GetMapping("/prestamos")

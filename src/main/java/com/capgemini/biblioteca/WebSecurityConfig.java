@@ -76,6 +76,7 @@ public class WebSecurityConfig {
 			.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros/create").hasAnyRole("ADMIN")
+			.requestMatchers("/autores/**").hasAnyRole("ADMIN")
 			.requestMatchers("/libros/{id}").hasAnyRole("ADMIN")
 			.requestMatchers("/signup").permitAll()
 			.requestMatchers("/prestamos/crear").hasAnyRole("ADMIN", "LECTOR")
