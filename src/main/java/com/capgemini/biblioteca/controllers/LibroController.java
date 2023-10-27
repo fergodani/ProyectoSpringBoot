@@ -60,7 +60,7 @@ public class LibroController {
 		model.addAttribute("numCopias", copias.size());
 		model.addAttribute("lectores", lectores);
 		model.addAttribute("prestamo", prestamo);
-		return "detallesLibro";
+		return "admin/detallesLibro";
 	}
 	
 	@GetMapping("/libros/create")
@@ -69,7 +69,7 @@ public class LibroController {
 		List<Autor> autores = this.autorService.findAll();
 		model.addAttribute("libro", libro);
 		model.addAttribute("autores", autores);
-		return "crearLibro";
+		return "admin/crearLibro";
 	}
 	
 	@GetMapping("/libros")

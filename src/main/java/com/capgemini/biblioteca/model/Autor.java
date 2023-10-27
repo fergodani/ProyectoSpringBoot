@@ -3,6 +3,8 @@ package com.capgemini.biblioteca.model;
 import java.util.Date;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +29,7 @@ public class Autor {
 	private String nacionalidad;
 	
 	@Column
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fechaNacimiento;
 	
 	@OneToMany(mappedBy = "autor", cascade = CascadeType.ALL)
