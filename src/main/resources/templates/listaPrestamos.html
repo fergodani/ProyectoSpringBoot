@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Lista de préstamos</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+	<nav th:replace="fragments/nav" />
+<h1 class="m-2">Mis préstamos</h1>
+<div class="container">
+	<a href="/" class="btn btn-primary mb-3">Volver</a>
+		<table class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>
+						Título
+					</th>
+					<th>
+						Fecha de inicio
+					</th>
+					<th>
+						Fecha de fin
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="prestamo:${prestamos}">
+					<td th:text="${prestamo.copia.libro.titulo}"></td>
+					<td th:text="${prestamo.inicio}"></td>
+					<td th:text="${prestamo.fin}"></td>
+					<td>
+						<a href="" class="btn btn-primary">Devolver</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

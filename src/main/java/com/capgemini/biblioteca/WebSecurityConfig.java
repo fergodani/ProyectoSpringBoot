@@ -3,6 +3,7 @@ package com.capgemini.biblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -73,8 +74,12 @@ public class WebSecurityConfig {
 		http
 		.authorizeHttpRequests((requests) -> requests
 			.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")
+			.requestMatchers("/libros").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros/create").hasAnyRole("ADMIN")
+			.requestMatchers("/libros/{id}").hasAnyRole("ADMIN")
 			.requestMatchers("/signup").permitAll()
+			.requestMatchers("/prestamos/crear").hasAnyRole("ADMIN", "LECTOR")
+			.requestMatchers("/prestamos/{id}").hasAnyRole("LECTOR")
 			.anyRequest().authenticated()
 		)
 		.formLogin((form) -> form
