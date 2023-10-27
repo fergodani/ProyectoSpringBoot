@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,18 +15,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.capgemini.biblioteca.model.Prestamo;
+import com.capgemini.biblioteca.model.Usuario;
 import com.capgemini.biblioteca.services.PrestamoService;
+import com.capgemini.biblioteca.services.UsuarioService;
 
 @Controller
 public class PrestamoController {
 
 	@Autowired
 	private PrestamoService prestamoService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
-	@GetMapping("/prestamos/{id}") // http://localhost:8080/users/id/2 se invocara asi
-	public String getPrestamoById(@PathVariable("id") long id) {
-		Prestamo prestamo = prestamoService.getEntityById(id);
-		return "detalles_prestamo";
+	@GetMapping("/prestamos/{lector_id}")
+	public String getPrestamoByLectorId(@PathVariable("lector_id") long lector_id, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+		if (user.getId() != lector_id) {
+			return "error";
+		}
+		List<Prestamo> prestamos = this.prestamoService.findByLectorId(lector_id);
+		model.addAttribute("prestamos", prestamos);
+		return "listaPrestamos";
 	}
 
 	@GetMapping("/prestamos")
@@ -40,7 +53,7 @@ public class PrestamoController {
 			@ModelAttribute("libro_id") long libro_id,
 			Model model) {
 		p.setInicio(new Date());
-		
+		System.out.println("hoddsjlfsdka");
 		if (p.getInicio().after(p.getFin())) {
 			return "error";
 		}else {
