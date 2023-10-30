@@ -1,6 +1,10 @@
 package com.capgemini.biblioteca.model;
 
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
+
+import com.capgemini.biblioteca.model.enums.EstadoCopia;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -10,9 +14,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -39,6 +40,12 @@ public class Lector {
 	
 	public Multa getMulta() {
 		return multa;
+	}
+
+	@Override
+	public String toString() {
+		return "Lector [nSocio=" + nSocio + ", nombre=" + nombre + ", telefono=" + telefono + ", direccion=" + direccion
+				+ ", multa=" + multa + "]";
 	}
 
 	public void setMulta(Multa multa) {
@@ -90,6 +97,20 @@ public class Lector {
 
 	public void setPrestamos(Set<Prestamo> prestamos) {
 		this.prestamos = prestamos;
+	}
+	
+	public Prestamo devolver(long id) {
+		if (this.getPrestamos().size() == 0)
+			return null;
+		
+		for (Prestamo prestamo : prestamos) {
+			if (prestamo.getId() == id) {
+				prestamo.getCopia().setEstadoCopia(EstadoCopia.BIBLIOTECA);
+				prestamo.setCopia(null);
+			}
+			return prestamo;	
+		}
+		return null;
 	}
 
 }
