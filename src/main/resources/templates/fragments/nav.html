@@ -22,6 +22,9 @@
 			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
 				<a href="/lectores" class="nav-link">Lectores</a>
 			</li>
+			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
+				<a href="/libros/editar" class="nav-link">Libros</a>
+			</li>
 			<li class="nav-item active" sec:authorize="hasRole('LECTOR')">
 				<a th:href="@{'/prestamos/' + ${user_id}}" class="nav-link" sec:authorize="hasRole('LECTOR')">Mis préstamos</a>
 			</li>

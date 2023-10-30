@@ -34,9 +34,6 @@ public class LectorController {
 	@GetMapping("/lectores")
 	public String getLectores(Model model) {
 		List<Lector> lectores = this.lectorService.findAll();
-		for (Lector lector : lectores) {
-			System.out.println(lector.getNombre());
-		}
 		model.addAttribute("listaLectores", lectores);
 		return "admin/lectores";
 	}
