@@ -97,6 +97,21 @@ public class LibroController {
 		return "index";
 	}
 	
+	@GetMapping("/libros/editar")
+	public String getEditarLibros(Model model) {
+		List<Libro> libros = this.libroService.findAll();
+		model.addAttribute("listaLibros2", libros);
+		return "admin/libros";
+	}
+	
+	
+	@GetMapping("/libros/update/{id}")
+	public String getEditorLibroForm(@PathVariable("id") long id, Model model) {
+		Libro libro = this.libroService.getEntityById(id);
+		model.addAttribute("libro", libro);
+		return "admin/editLibros";
+	}
+	
 	@PostMapping("/libros")
 	public String altaLibro(@ModelAttribute("libro") Libro l)
 	{
