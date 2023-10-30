@@ -8,11 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 
 import com.capgemini.biblioteca.model.Lector;
 import com.capgemini.biblioteca.model.Libro;
@@ -23,12 +23,15 @@ import com.capgemini.biblioteca.services.LibroService;
 import com.capgemini.biblioteca.services.PrestamoService;
 import com.capgemini.biblioteca.services.UsuarioService;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 @Controller
 public class PrestamoController {
 
 	@Autowired
 	private PrestamoService prestamoService;
 	
+
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -37,6 +40,7 @@ public class PrestamoController {
 	
 	@Autowired
 	private LectorService lectorService;
+
 
 	@GetMapping("/prestamos/{lector_id}")
 	public String getPrestamoByLectorId(@PathVariable("lector_id") long lector_id, Model model) {
@@ -61,7 +65,7 @@ public class PrestamoController {
 
 	@PostMapping("/prestamos/crear")
 	public String altaPrestamo(
-			@ModelAttribute("prestamo") Prestamo p, 
+			@ModelAttribute("prestamo") Prestamo p,
 			@ModelAttribute("libro_id") long libro_id,
 			Model model) {
 		p.setInicio(new Date());
@@ -70,15 +74,20 @@ public class PrestamoController {
 			return "error";
 		}else {
 			prestamoService.saveEntity(p, libro_id);
-			return "redirect:/";
-		}
 		
+			return "redirect:/libros/" + libro_id;
+		}
+			
 	}
 
-	@DeleteMapping("/prestamos")
-	public String delete(@PathVariable("/prestamos") long id) {
-		prestamoService.deleteEntity(id);
-		return "index";
+	@GetMapping("/delete/{id}/{libro_id}")
+	public String deleteCurso(@PathVariable(value = "id") long id,
+			@PathVariable(value = "libro_id") long libro_id,
+			 HttpServletRequest request)
+	{
+		this.prestamoService.deleteEntity(id);
+	    return "redirect:/libros/" + libro_id;
+		
 	}
 	
 	@GetMapping("/prestamos/crear/{libro_id}")

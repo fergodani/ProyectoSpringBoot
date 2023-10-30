@@ -19,33 +19,34 @@ import com.capgemini.biblioteca.validators.SignUpFormValidator;
 
 @Controller
 public class UserController {
-	
-	@Autowired
-    private UsuarioService usersService;
-	
+
 	@Autowired
 	private LectorService lectorService;
 
-    @Autowired
-    private SecurityService securityService;
-	
+
 	@Autowired
-    private SignUpFormValidator signUpFormValidator;
-	
+	private UsuarioService usersService;
+
 	@Autowired
-    private RolesService rolesService;
+	private SecurityService securityService;
+
+	@Autowired
+	private SignUpFormValidator signUpFormValidator;
+
+	@Autowired
+	private RolesService rolesService;
 
 	@GetMapping("/login")
 	public String getLoginForm() {
 		return "login";
 	}
-	
+
 	@GetMapping("/signup")
-    public String signup(Model model) {
-        model.addAttribute("user", new Usuario());
-        return "signup";
-    }
-	
+	public String signup(Model model) {
+		model.addAttribute("user", new Usuario());
+		return "signup";
+	}
+
 	@PostMapping("/signup")
     public String signup(@Validated Usuario user, BindingResult result) {
         signUpFormValidator.validate(user, result);
@@ -62,5 +63,5 @@ public class UserController {
         securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
         return "redirect:/";
     }
-	
+
 }
