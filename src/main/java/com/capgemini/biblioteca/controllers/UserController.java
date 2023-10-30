@@ -16,41 +16,42 @@ import com.capgemini.biblioteca.validators.SignUpFormValidator;
 
 @Controller
 public class UserController {
-	
-	@Autowired
-    private UsuarioService usersService;
 
-    @Autowired
-    private SecurityService securityService;
-	
 	@Autowired
-    private SignUpFormValidator signUpFormValidator;
-	
+	private UsuarioService usersService;
+
 	@Autowired
-    private RolesService rolesService;
+	private SecurityService securityService;
+
+	@Autowired
+	private SignUpFormValidator signUpFormValidator;
+
+	@Autowired
+	private RolesService rolesService;
 
 	@GetMapping("/login")
 	public String getLoginForm() {
 		return "login";
 	}
-	
+
 	@GetMapping("/signup")
-    public String signup(Model model) {
-        model.addAttribute("user", new Usuario());
-        return "signup";
-    }
-	
+	public String signup(Model model) {
+		model.addAttribute("user", new Usuario());
+		return "signup";
+	}
+
 	@PostMapping("/signup")
-    public String signup(@Validated Usuario user, BindingResult result) {
+	public String signup(@Validated Usuario user, BindingResult result) {
 		System.out.println("Hola");
-        signUpFormValidator.validate(user, result);
-        if (result.hasErrors())
-            return "signup";
-        System.out.println("Hola2");
-        user.setRole(rolesService.getRoles()[0]);
-        usersService.saveEntity(user);
-        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
-        return "redirect:/";
-    }
-	
+		signUpFormValidator.validate(user, result);
+		System.out.println("Hola2");
+//		if (result.hasErrors())
+//			return "signup";
+		System.out.println("Hola2");
+		user.setRole(rolesService.getRoles()[0]);
+		usersService.saveEntity(user);
+		securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
+		return "redirect:/";
+	}
+
 }

@@ -1,5 +1,6 @@
 package com.capgemini.biblioteca.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import com.capgemini.biblioteca.services.AutorService;
 import com.capgemini.biblioteca.services.CopiaService;
 import com.capgemini.biblioteca.services.LectorService;
 import com.capgemini.biblioteca.services.LibroService;
+import com.capgemini.biblioteca.services.PrestamoService;
 @Controller
 public class LibroController {
 
@@ -36,6 +38,9 @@ public class LibroController {
 	@Autowired
 	private LectorService lectorService;
 	
+	@Autowired
+	private PrestamoService prestamoService;
+	
 		
 	@GetMapping("/")
 	public String getIndex() {
@@ -49,6 +54,13 @@ public class LibroController {
 		Prestamo prestamo = new Prestamo();
 		List<Copia> copias = this.copiaService.findCopiasByLibroId(id);
 		List<Lector> lectores = this.lectorService.findAll();
+		List<Prestamo> prestamos = new ArrayList<Prestamo>();
+		for (Copia copia : copias) {
+			for (Prestamo p : prestamoService.findByCopiaId(copia.getId())) {
+				prestamos.add(p);
+			}			
+		}
+		model.addAttribute("listaPrestamos", prestamos);
 		model.addAttribute("libro", libro);
 		model.addAttribute("numCopias", copias.size());
 		model.addAttribute("lectores", lectores);

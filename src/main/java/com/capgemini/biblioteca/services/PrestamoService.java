@@ -13,4 +13,6 @@ public interface PrestamoService {
 	void saveEntity(Prestamo prestamo, long id);
 
 	void deleteEntity(long id);
+	
+	List<Prestamo> findByCopiaId(long id);
 }

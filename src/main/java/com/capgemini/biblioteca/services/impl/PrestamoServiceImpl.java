@@ -71,6 +71,11 @@ public class PrestamoServiceImpl implements PrestamoService  {
 		else
 			throw new RuntimeException("No se encuentra el autor con id: " + id);
 		
+	}
+
+	@Override
+	public List<Prestamo> findByCopiaId(long id) {
+		return this.prestamoRepository.findByCopiaId(id);		
 	}	
 	
 

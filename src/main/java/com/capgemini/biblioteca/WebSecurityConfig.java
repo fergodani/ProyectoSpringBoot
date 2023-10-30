@@ -72,11 +72,17 @@ public class WebSecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 		.authorizeHttpRequests((requests) -> requests
-			.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")
-			.requestMatchers("/libros/create").hasAnyRole("ADMIN")
-			.requestMatchers("/signup").permitAll()
-			.anyRequest().authenticated()
-		)
+				.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")
+				.requestMatchers("/libros").hasAnyRole("ADMIN", "LECTOR")
+				.requestMatchers("/libros/create").hasAnyRole("ADMIN")
+				.requestMatchers("/autores").hasAnyRole("ADMIN")
+				.requestMatchers("/autores/delete/**").hasAnyRole("ADMIN")
+				.requestMatchers("/libros/{id}").hasAnyRole("ADMIN")
+				.requestMatchers("/signup").permitAll()
+				.requestMatchers("/prestamos/crear").hasAnyRole("ADMIN", "LECTOR")
+				.requestMatchers("/prestamos/{id}").hasAnyRole("LECTOR")
+				.anyRequest().authenticated()
+			)
 		.formLogin((form) -> form
 			.loginPage("/login")
 			.permitAll()
