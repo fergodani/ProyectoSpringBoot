@@ -82,7 +82,9 @@ public class WebSecurityConfig {
 			.requestMatchers("/libros/{id}").hasAnyRole("ADMIN")
 			.requestMatchers("/signup").permitAll()
 			.requestMatchers("/prestamos/crear").hasAnyRole("ADMIN", "LECTOR")
+			.requestMatchers("/prestamos/crear/{id}").hasAnyRole("LECTOR")
 			.requestMatchers("/prestamos/{id}").hasAnyRole("LECTOR")
+			.requestMatchers("/prestamos/devolver/{lector_id}/{prestamo_id}").hasAnyRole("LECTOR")
 			.anyRequest().authenticated()
 		)
 		.formLogin((form) -> form
