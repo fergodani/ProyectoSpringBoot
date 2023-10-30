@@ -8,6 +8,7 @@
 </head>
 
 <body>
+	<nav th:replace="fragments/nav"/>
 	<h1 class="ml-5 mt-5">[[${libro.titulo}]]</h1>
 	<h2 class="ml-5 mt-2">Numero de copias: [[${numCopias}]]</h2>
 	<form action="/copias/crear" method="post" class="form-group d-flex ml-5 mt-2"
@@ -26,7 +27,8 @@
 		<select th:field="*{lector}" class="form-control mb-2">
 			<option th:each="lector : ${lectores}" th:value="${lector.nSocio}" th:text="${lector.nombre}"></option>
 		</select>
-		<button type="submit" class="btn btn-primary">Crear préstamo</button>		
+		<button type="submit" class="btn btn-primary">Crear préstamo</button>
+
 		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 	</form>
 	<table class="table table-striped ml-5" >

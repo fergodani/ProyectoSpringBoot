@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.biblioteca.model.Usuario;
+import com.capgemini.biblioteca.repositories.LectorRepository;
 import com.capgemini.biblioteca.repositories.UsuarioRepository;
 import com.capgemini.biblioteca.services.UsuarioService;
 
@@ -16,6 +17,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Autowired
     private UsuarioRepository usuarioRepository;
+	
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;

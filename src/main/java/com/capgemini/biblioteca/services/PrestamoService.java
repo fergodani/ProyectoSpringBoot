@@ -9,6 +9,8 @@ public interface PrestamoService {
 	Prestamo getEntityById(long id);
 
 	List<Prestamo> findAll();
+	
+	List<Prestamo> findByLectorId(long lector_id);
 
 	void saveEntity(Prestamo prestamo, long id);
 

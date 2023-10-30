@@ -74,8 +74,14 @@ public class PrestamoServiceImpl implements PrestamoService  {
 	}
 
 	@Override
+
 	public List<Prestamo> findByCopiaId(long id) {
-		return this.prestamoRepository.findByCopiaId(id);		
+		return this.prestamoRepository.findByCopiaId(id);	
+	}	
+
+	public List<Prestamo> findByLectorId(long lector_id) {
+		return this.prestamoRepository.findByLectorId(lector_id);
+
 	}	
 	
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,11 +19,14 @@ import com.capgemini.biblioteca.model.Copia;
 import com.capgemini.biblioteca.model.Lector;
 import com.capgemini.biblioteca.model.Libro;
 import com.capgemini.biblioteca.model.Prestamo;
+import com.capgemini.biblioteca.model.Usuario;
 import com.capgemini.biblioteca.services.AutorService;
 import com.capgemini.biblioteca.services.CopiaService;
 import com.capgemini.biblioteca.services.LectorService;
 import com.capgemini.biblioteca.services.LibroService;
 import com.capgemini.biblioteca.services.PrestamoService;
+import com.capgemini.biblioteca.services.UsuarioService;
+
 @Controller
 public class LibroController {
 
@@ -40,6 +45,10 @@ public class LibroController {
 	
 	@Autowired
 	private PrestamoService prestamoService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+
 	
 		
 	@GetMapping("/")
@@ -65,7 +74,7 @@ public class LibroController {
 		model.addAttribute("numCopias", copias.size());
 		model.addAttribute("lectores", lectores);
 		model.addAttribute("prestamo", prestamo);
-		return "detallesLibro";
+		return "admin/detallesLibro";
 	}
 	
 	@GetMapping("/libros/create")
@@ -74,13 +83,17 @@ public class LibroController {
 		List<Autor> autores = this.autorService.findAll();
 		model.addAttribute("libro", libro);
 		model.addAttribute("autores", autores);
-		return "crearLibro";
+		return "admin/crearLibro";
 	}
 	
 	@GetMapping("/libros")
 	public String getLibros(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
 		List<Libro> libros = this.libroService.findAll();
 		model.addAttribute("listaLibros", libros);
+		model.addAttribute("name", user.getName());
+		model.addAttribute("user_id", user.getId());
 		return "index";
 	}
 	
