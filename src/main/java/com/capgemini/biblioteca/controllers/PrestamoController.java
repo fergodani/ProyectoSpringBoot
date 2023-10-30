@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.capgemini.biblioteca.model.Lector;
+import com.capgemini.biblioteca.model.Libro;
 import com.capgemini.biblioteca.model.Prestamo;
 import com.capgemini.biblioteca.model.Usuario;
+import com.capgemini.biblioteca.services.LectorService;
+import com.capgemini.biblioteca.services.LibroService;
 import com.capgemini.biblioteca.services.PrestamoService;
 import com.capgemini.biblioteca.services.UsuarioService;
 
@@ -27,6 +31,12 @@ public class PrestamoController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private LibroService libroService;
+	
+	@Autowired
+	private LectorService lectorService;
 
 	@GetMapping("/prestamos/{lector_id}")
 	public String getPrestamoByLectorId(@PathVariable("lector_id") long lector_id, Model model) {
@@ -37,6 +47,8 @@ public class PrestamoController {
 		}
 		List<Prestamo> prestamos = this.prestamoService.findByLectorId(lector_id);
 		model.addAttribute("prestamos", prestamos);
+		model.addAttribute("lector_id", lector_id);
+		model.addAttribute("user_id", user.getId());
 		return "lector/listaPrestamos";
 	}
 
@@ -53,7 +65,7 @@ public class PrestamoController {
 			@ModelAttribute("libro_id") long libro_id,
 			Model model) {
 		p.setInicio(new Date());
-		System.out.println("hoddsjlfsdka");
+		System.out.println(p.getLector());
 		if (p.getInicio().after(p.getFin())) {
 			return "error";
 		}else {
@@ -67,6 +79,30 @@ public class PrestamoController {
 	public String delete(@PathVariable("/prestamos") long id) {
 		prestamoService.deleteEntity(id);
 		return "index";
+	}
+	
+	@GetMapping("/prestamos/crear/{libro_id}")
+	public String getCreatePrestamoForm(@PathVariable("libro_id") long libro_id, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+		Libro libro = this.libroService.getEntityById(libro_id);
+		Prestamo prestamo = new Prestamo();
+		prestamo.setLector(user.getLector());
+		System.out.println(prestamo.getLector());
+		model.addAttribute("libro", libro);
+		model.addAttribute("prestamo", prestamo);
+		model.addAttribute("lector", user.getLector());
+		model.addAttribute("user_id", user.getId());
+		return "lector/crearPrestamo";
+	}
+	
+	@GetMapping("/prestamos/devolver/{lector_id}/{prestamo_id}")
+	public String devolverPrestamo(@PathVariable("lector_id") long lector_id, 
+			@PathVariable("prestamo_id") long prestamo_id) {
+		Lector lector = this.lectorService.getEntityById(lector_id);
+		lector.devolver(prestamo_id);
+		this.lectorService.saveEntity(lector);
+		return "redirect:/prestamos/" + lector_id;
 	}
 
 }

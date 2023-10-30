@@ -26,11 +26,14 @@
 			</thead>
 			<tbody>
 				<tr th:each="prestamo:${prestamos}">
-					<td th:text="${prestamo.copia.libro.titulo}"></td>
+					<td th:text="${prestamo.titulo_libro}"></td>
 					<td th:text="${prestamo.inicio}"></td>
 					<td th:text="${prestamo.fin}"></td>
-					<td>
-						<a href="" class="btn btn-primary">Devolver</a>
+					<td th:if="${prestamo.copia != null}">
+						<a th:href="@{'/prestamos/devolver/' + ${lector_id} + '/' + ${prestamo.id}}" class="btn btn-primary">Devolver</a>
+					</td>
+					<td th:if="${prestamo.copia == null}">
+						<a th:href="@{'/prestamos/devolver/' + ${lector_id} + '/' + ${prestamo.id}}" class="btn btn-primary disabled">Devolver</a>
 					</td>
 				</tr>
 			</tbody>
