@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-1">
 	<a class="navbar-brand" href="#">Biblioteca</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
 		aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,28 +6,33 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 
-		<ul class="navbar-nav">
-			<li class="nav-item active">
-				<a class="nav-link" href="/">Inicio</a>
+		<ul class="navbar-nav p-2">
+			<li id="marks-menu" class="nav-item dropdown active" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Gestión de autores
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/autores/crear">Agregar autor</a>
+					<a class="dropdown-item" href="/autores">Ver autores</a>
+				</div>
 			</li>
-			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-				<a href="/autores" class="nav-link">Autores</a>
-			</li>
-			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-				<a href="/autores/crear" class="nav-link">Añadir autor</a>
-			</li>
-			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-				<a href="/libros/create" class="nav-link">Añadir libro</a>
+			<li id="marks-menu" class="nav-item dropdown active" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Gestión de libros
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/libros/create">Agregar libro</a>
+					<a class="dropdown-item" href="/libros/editar">Ver libros</a>
+				</div>
 			</li>
 			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
 				<a href="/lectores" class="nav-link">Lectores</a>
 			</li>
-			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-				<a href="/libros/editar" class="nav-link">Libros</a>
-			</li>
 			<li class="nav-item active" sec:authorize="hasRole('LECTOR')">
-				<a th:href="@{'/prestamos/' + ${user_id}}" class="nav-link" sec:authorize="hasRole('LECTOR')">Mis préstamos</a>
+				<a th:href="@{'/prestamos/' + ${user_id}}" class="nav-link" sec:authorize="hasRole('LECTOR')">Mis
+					préstamos</a>
 			</li>
+
 		</ul>
 
 	</div>

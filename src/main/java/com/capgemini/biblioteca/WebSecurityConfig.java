@@ -71,6 +71,7 @@ public class WebSecurityConfig {
 	 */
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf().ignoringRequestMatchers("/login");
 		http
 		.authorizeHttpRequests((requests) -> requests
 			.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")

@@ -31,7 +31,6 @@ public class PrestamoController {
 	@Autowired
 	private PrestamoService prestamoService;
 	
-
 	@Autowired
 	private UsuarioService usuarioService;
 	
@@ -56,12 +55,12 @@ public class PrestamoController {
 		return "lector/listaPrestamos";
 	}
 
-	@GetMapping("/prestamos")
-	public String getPrestamos(Model model) {
-		List<Prestamo> prestamos = this.prestamoService.findAll();
-		model.addAttribute("listaPrestamos", prestamos);
-		return "prestamos";
-	}
+//	@GetMapping("/prestamos")
+//	public String getPrestamos(Model model) {
+//		List<Prestamo> prestamos = this.prestamoService.findAll();
+//		model.addAttribute("listaPrestamos", prestamos);
+//		return "prestamos";
+//	}
 
 	@PostMapping("/prestamos/crear")
 	public String altaPrestamo(
