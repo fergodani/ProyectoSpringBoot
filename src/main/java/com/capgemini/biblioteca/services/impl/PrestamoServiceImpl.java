@@ -42,7 +42,10 @@ public class PrestamoServiceImpl implements PrestamoService  {
 
 	@Override
 	public void saveEntity(Prestamo prestamo, long libro_id) {
-		System.out.println("id: " + prestamo.getId());
+		// TODO gestionar multa
+		
+		
+		
 		Set<Prestamo> prestamos = prestamo.getLector().getPrestamos();
 		int prestamosNoDevueltos = 0;
 		for (Prestamo p : prestamos) {
