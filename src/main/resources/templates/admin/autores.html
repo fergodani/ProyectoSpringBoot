@@ -31,7 +31,7 @@
 					<td th:text="${autor.nacionalidad}"></td>
 					<td th:text="${autor.fechaNacimiento}"></td>
 					<td>
-						<a th:href="@{'/autores/update/' + ${autor.id}}" class="btn btn-info">Editar</a>
+						<a th:id="${autor.nombre}" th:href="@{'/autores/update/' + ${autor.id}}" class="btn btn-info">Editar</a>
 						<a th:href="@{'/autores/delete/' + ${autor.id}}" class="btn btn-danger">Eliminar</a>
 					</td>
 				</tr>
