@@ -24,12 +24,12 @@ public class AutorController {
 	@Autowired
 	private AutorService autorService;
 	
-	@GetMapping("/autores/{id}") 
-	public String getAutorById(@PathVariable("id") long id, Model model) {
-		Autor autor =  autorService.getEntityById(id);
-		model.addAttribute("autor", autor);
-		return "detalles_autor";
-	}
+//	@GetMapping("/autores/{id}") 
+//	public String getAutorById(@PathVariable("id") long id, Model model) {
+//		Autor autor =  autorService.getEntityById(id);
+//		model.addAttribute("autor", autor);
+//		return "detalles_autor";
+//	}
 		
 	@GetMapping("/autores")
 	public String getAutores(Model model) {

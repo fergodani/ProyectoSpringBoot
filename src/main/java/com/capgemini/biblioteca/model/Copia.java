@@ -1,9 +1,10 @@
 package com.capgemini.biblioteca.model;
 
-import java.util.List;
 import java.util.Set;
 
 import com.capgemini.biblioteca.model.enums.EstadoCopia;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,9 +33,11 @@ public class Copia {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "libro_id")
+	@JsonBackReference
 	private Libro libro;
 	
 	@OneToMany(mappedBy = "copia", targetEntity = Prestamo.class)
+	@JsonManagedReference
 	private Set<Prestamo> prestamos;
 
 	public Long getId() {

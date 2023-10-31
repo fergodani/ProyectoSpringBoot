@@ -23,12 +23,11 @@ public class LectorController {
 	@Autowired
 	private LectorService lectorService;
 	
-	@GetMapping("/lectores/{id}")
-	public String getLectorById(@PathVariable("id") long id) {
-		Lector lector=  lectorService.getEntityById(id);
-		return "detalles_lector";
-	}
-	
+//	@GetMapping("/lectores/{id}")
+//	public String getLectorById(@PathVariable("id") long id) {
+//		Lector lector=  lectorService.getEntityById(id);
+//		return "detalles_lector";
+//	}
 	
 	
 	@GetMapping("/lectores")
