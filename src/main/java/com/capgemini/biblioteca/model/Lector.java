@@ -1,10 +1,9 @@
 package com.capgemini.biblioteca.model;
 
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import com.capgemini.biblioteca.model.enums.EstadoCopia;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
@@ -35,6 +34,7 @@ public class Lector {
 	private String direccion;
 	
 	@OneToMany(mappedBy = "lector", targetEntity = Prestamo.class)
+	@JsonManagedReference
 	private Set<Prestamo> prestamos;
 	
 	
