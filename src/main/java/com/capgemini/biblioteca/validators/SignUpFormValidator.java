@@ -25,7 +25,7 @@ public class SignUpFormValidator implements Validator{
 		Usuario user = (Usuario) target;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "Error.empty");
-        if (user.getUsername().length() < 5 || user.getUsername().length() > 24) {
+        if (user.getUsername().length() < 3 || user.getUsername().length() > 24) {
             errors.rejectValue("username", "Error.signup.username.length");}
 
         if (usersService.getUserByUsername(user.getUsername()) != null) {
@@ -34,7 +34,7 @@ public class SignUpFormValidator implements Validator{
             errors.rejectValue("name", "Error.signup.name.length");}
         if (user.getLastName().length() < 5 || user.getLastName().length() > 24) {
             errors.rejectValue("lastName", "Error.signup.lastName.length");}
-        if (user.getPassword().length() < 5 || user.getPassword().length() > 24) {
+        if (user.getPassword().length() < 4 || user.getPassword().length() > 24) {
             errors.rejectValue("password", "Error.signup.password.length");}
         if (!user.getPasswordConfirm().equals(user.getPassword())) {
             errors.rejectValue("passwordConfirm",

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<nav th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav"/>
+	<h1 class="m-2">Libros</h1>
+	<div class="container">
+		<a href="/" class="btn btn-primary mb-3">Volver</a>
+		<table class="table table-striped table-responsive-md">
+			<thead>
+				<tr>
+					<th>
+						Título del libro
+					</th>
+					<th>
+						Tipo de libro
+					</th>
+					<th>
+						Año de publicación
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="libro:${listaLibros2}">
+					<td th:text="${libro.titulo}"></td>
+					<td th:text="${libro.tipoLibro}"></td>
+					<td th:text="${libro.anyo}"></td>
+					<td>
+						<a th:id="${libro.titulo}" th:href="@{'/libros/update/' + ${libro.id}}" class="btn btn-info">Editar</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

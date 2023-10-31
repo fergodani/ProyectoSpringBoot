@@ -42,8 +42,14 @@ public class PrestamoServiceImpl implements PrestamoService  {
 
 	@Override
 	public void saveEntity(Prestamo prestamo, long libro_id) {
+		System.out.println("id: " + prestamo.getId());
 		Set<Prestamo> prestamos = prestamo.getLector().getPrestamos();
-		if (prestamos.size() >= 3) {
+		int prestamosNoDevueltos = 0;
+		for (Prestamo p : prestamos) {
+			if (p.getCopia() != null)
+				prestamosNoDevueltos++;
+		}
+		if (prestamosNoDevueltos >= 3) {
 			throw new RuntimeException("El lector " + prestamo.getLector().getNombre() + " no puede sacar más préstamos");
 		}
 		
@@ -54,6 +60,7 @@ public class PrestamoServiceImpl implements PrestamoService  {
 				if (copia.getEstadoCopia() == EstadoCopia.BIBLIOTECA) {
 					copia.setEstadoCopia(EstadoCopia.PRESTADO);
 					prestamo.setCopia(copia);
+					prestamo.setTitulo_libro(libro.get().getTitulo());
 					this.prestamoRepository.save(prestamo);
 					return;
 				}
@@ -71,6 +78,17 @@ public class PrestamoServiceImpl implements PrestamoService  {
 		else
 			throw new RuntimeException("No se encuentra el autor con id: " + id);
 		
+	}
+
+	@Override
+
+	public List<Prestamo> findByCopiaId(long id) {
+		return this.prestamoRepository.findByCopiaId(id);	
+	}	
+
+	public List<Prestamo> findByLectorId(long lector_id) {
+		return this.prestamoRepository.findByLectorId(lector_id);
+
 	}	
 	
 

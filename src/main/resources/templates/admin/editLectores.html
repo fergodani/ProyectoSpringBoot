@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<nav th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav"/>
+	<a href="/" class="btn btn-primary ml-3">Volver</a>
+	<h1 class="ml-3 mt-2 ml-2">Modificar Lector</h1>
+
+	<form class="form-group m-3 w-50" action="#" method="post" th:action="@{/lectores}" th:object="${lector}">
+		<input type="hidden" th:field="*{nSocio}">
+		<label for="nombre">Nombre:</label>
+		<input class="form-control" th:field="*{nombre}" type="text" id="nombre" nombre="nombre">
+		<label for="nacionalidad">Número teléfono:</label>
+		<input class="form-control" th:field="*{telefono}" type="text" id="telefono" nombre="telefono">
+		<label for="fechaNacimiento">Direccion:</label>
+		<input class="form-control" th:field="*{direccion}" type="text" id="direccion" nombre="direccion">
+		<button type="submit" class="btn btn-info mt-2">Guardar</button>
+	</form>
+
+
+</body>
+
+</html>

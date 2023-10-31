@@ -1,4 +1,43 @@
-<!-- nav.html -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-    
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-1">
+	<a class="navbar-brand" href="#">Biblioteca</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+		aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+
+		<ul class="navbar-nav p-2">
+			<li id="marks-menu" class="nav-item dropdown active" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAut" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Gestión de autores
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/autores/crear">Agregar autor</a>
+					<a class="dropdown-item" href="/autores">Ver autores</a>
+				</div>
+			</li>
+			<li id="marks-menu" class="nav-item dropdown active" sec:authorize="hasRole('ADMIN')">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLib" role="button" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"> Gestión de libros
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="/libros/create">Agregar libro</a>
+					<a class="dropdown-item" href="/libros/editar">Ver libros</a>
+				</div>
+			</li>
+			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
+				<a href="/lectores" class="nav-link">Lectores</a>
+			</li>
+			<li class="nav-item active" sec:authorize="hasRole('LECTOR')">
+				<a th:href="@{'/prestamos/' + ${user_id}}" class="nav-link" sec:authorize="hasRole('LECTOR')">Mis
+					préstamos</a>
+			</li>
+
+		</ul>
+
+	</div>
+
+	<form class="" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+		<input class="btn btn-primary" type="submit" value="Cerrar Sesión" id="logout"/>
+	</form>
 </nav>

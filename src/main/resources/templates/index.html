@@ -1,61 +1,40 @@
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html lang="en" xmls:th="http://www.thymeleaf.org">
-<head>
-<meta charset="ISO-8859-1">
-<title>Biblioteca</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-</head>
+
+<nav th:replace="fragments/head" />
 
 <body>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">Mi Sitio Web</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navbarNav">
-			<ul class="navbar-nav">
-				<li class="nav-item active">
-					<a class="nav-link" href="#">Inicio</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Acerca de</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Servicios</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Contacto</a>
-				</li>
-			</ul>
-		</div>
-		<form class="" th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
-			<input class="btn btn-primary" type="submit" value="Cerrar Sesión" />
-		</form>
-	</nav>
-	<div sec:authorize="hasRole('ADMIN')">
-    Autenticado como Administrador
-</div>
-<div sec:authorize="hasRole('LECTOR')">
-    Autenticado como Lector
-</div>
+	<nav th:replace="fragments/nav" />
+
+	<p class="ml-3 mt-3">
+		Bienvenido/a
+		<b th:inline="text">[[${name}]]</b>
+	</p>
+
 	<div th:if="${error != null}">
 		<div class="alert alert-danger" role="alert">
 			<p>[[${error}]]</p>
 		</div>
 	</div>
-	<h1 class="ml-5 mt-5">Biblioteca</h1>
-	<a href="/libros/create" class="btn btn-primary ml-5 mt-2">Agregar libro</a>
-	<section class="d-flex flex-wrap ml-3 mr-3">
+	<h1 class="ml-3 mt-3">Biblioteca</h1>
+	<a href="/libros/create" class="btn btn-primary ml-5 mt-2" sec:authorize="hasRole('ADMIN')">Agregar libro</a>
+
+		<div class="d-flex flex-wrap">
+
 		<div th:each="libro:${listaLibros}" class="card m-2" style="width: 18rem;">
 			<div class="card-body">
-				<h5 th:text="${libro.titulo}" class="card-title"></h5>
+				<h5 th:text="${libro.titulo}" class="card-title" id="tituloCarta"></h5>
 				<p th:text="${libro.tipoLibro}" class="card-text"></p>
 				<p class="card-text">[[${libro.anyo}]]</p>
 				<p th:text="${libro.autor.nombre}" class="card-text"></p>
-				<a th:href="@{'/libros/' + ${libro.id}}" class="btn btn-primary">Detalles</a>
+				<a th:href="@{'/libros/' + ${libro.id}}" sec:authorize="hasRole('ADMIN')"
+					class="btn btn-primary">Detalles</a>
+				<a th:href="@{'/prestamos/crear/' + ${libro.id}}" sec:authorize="hasRole('LECTOR')"
+					class="btn btn-primary">Crear préstamo</a>
+			</div>
 			</div>
 		</div>
+	</div>
 	</section>
 </body>
 

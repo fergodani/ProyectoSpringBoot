@@ -4,6 +4,8 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,12 +28,14 @@ public class Prestamo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="copia_id")
+	@JsonBackReference
 	private Copia copia;
 	
 	@ManyToOne
 	@JoinColumn(name="lector_id")
+	@JsonBackReference
 	private Lector lector;
 	
 	@Column
@@ -43,6 +46,9 @@ public class Prestamo {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date fin;
 	
+	@Column
+	private String titulo_libro;
+	
 	public long getId() {
 		return id;
 	}
@@ -51,6 +57,12 @@ public class Prestamo {
 	}
 	public Copia getCopia() {
 		return copia;
+	}
+	public String getTitulo_libro() {
+		return titulo_libro;
+	}
+	public void setTitulo_libro(String titulo_libro) {
+		this.titulo_libro = titulo_libro;
 	}
 	public void setCopia(Copia copia) {
 		this.copia = copia;

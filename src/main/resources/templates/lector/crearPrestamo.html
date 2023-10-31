@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmls:th="http://www.thymeleaf.org">
+
+<nav th:replace="fragments/head" />
+
+<body>
+	<nav th:replace="fragments/nav" />
+	<h3 class="ml-5 mt-2">Crear préstamo para [[${libro.titulo}]]</h3>
+	<form action="/prestamos/crear" method="post" class="form-group ml-5 mt-2"
+		th:object="${prestamo}" style="width: 18rem;">
+		<label for="titulo">Fecha de fin</label>
+		<input class="form-control mb-2" th:field="*{fin}" th:format="yyyy-MM-dd" th:placeholder="yyyy-MM-dd" type="date" id="fin" nombre="fin">
+		<input id="libro_id" name="libro_id" type="number" hidden th:value="${libro.id}" />
+		<select hidden th:field="*{lector}" class="form-control mb-2">
+			<option th:value="${lector.nSocio}" th:text="${lector.nombre}"></option>
+		</select>
+		<button type="submit" class="btn btn-primary">Crear préstamo</button>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+	</form>
+	<a href="/" class="btn btn-primary ml-5 mt-3 mb-3">Volver</a>
+</body>
+
+</html>

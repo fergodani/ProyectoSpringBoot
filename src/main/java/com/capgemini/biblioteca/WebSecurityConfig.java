@@ -3,6 +3,7 @@ package com.capgemini.biblioteca;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -70,11 +71,22 @@ public class WebSecurityConfig {
 	 */
 	@Bean
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		http.csrf().ignoringRequestMatchers("/login");
 		http
 		.authorizeHttpRequests((requests) -> requests
 			.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")
+			.requestMatchers("/libros").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros/create").hasAnyRole("ADMIN")
+			.requestMatchers("/libros/**").hasAnyRole("ADMIN")
+			.requestMatchers("/lectores").hasAnyRole("ADMIN")
+			.requestMatchers("/lectores/**").hasAnyRole("ADMIN")
+			.requestMatchers("/autores/**").hasAnyRole("ADMIN")
+			.requestMatchers("/libros/{id}").hasAnyRole("ADMIN")
 			.requestMatchers("/signup").permitAll()
+			.requestMatchers("/prestamos/crear").hasAnyRole("ADMIN", "LECTOR")
+			.requestMatchers("/prestamos/crear/{id}").hasAnyRole("LECTOR")
+			.requestMatchers("/prestamos/{id}").hasAnyRole("LECTOR")
+			.requestMatchers("/prestamos/devolver/{lector_id}/{prestamo_id}").hasAnyRole("LECTOR")
 			.anyRequest().authenticated()
 		)
 		.formLogin((form) -> form

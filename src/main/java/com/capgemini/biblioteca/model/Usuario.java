@@ -1,10 +1,14 @@
 package com.capgemini.biblioteca.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -17,8 +21,52 @@ public class Usuario {
     private long id;
     @Column(unique = true)
     private String username;
+    
+    private String name;
+    private String lastName;
+    private String role;
+    
+    @Column
+	private String telefono;
+	
+	@Column
+	private String direccion;
+
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+    
+    @OneToOne
+	@JoinColumn(name="lector_id")
+	private Lector lector;
+    
     public String getUsername() {
 		return username;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public Lector getLector() {
+		return lector;
+	}
+
+	public void setLector(Lector lector) {
+		this.lector = lector;
 	}
 
 	public void setUsername(String username) {
@@ -73,12 +121,5 @@ public class Usuario {
 		this.passwordConfirm = passwordConfirm;
 	}
 
-	private String name;
-    private String lastName;
-    private String role;
-
-    private String password;
-
-    @Transient
-    private String passwordConfirm;
+	
 }
