@@ -26,7 +26,7 @@
 					<td th:text="${lector.telefono}"></td>
 					<td th:text="${lector.direccion}"></td>
 					<td>
-						<a th:href="@{'/lectores/update/' + ${lector.nSocio}}" class="btn btn-info">Editar</a>
+						<a th:id="${lector.nombre}" th:href="@{'/lectores/update/' + ${lector.nSocio}}" class="btn btn-info">Editar</a>
 					</td>
 				</tr>
 			</tbody>
