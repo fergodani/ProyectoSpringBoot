@@ -6,9 +6,10 @@
 <body>
 	<nav th:replace="fragments/nav"/>
 	<a href="/" class="btn btn-primary ml-3">Volver</a>
+	<div class="d-flex flex-column justify-content-center align-items-center text-center">
 	<h1 class="ml-3 mt-2 ml-2">Modificar autor</h1>
 	
-	<form class="form-group m-3 w-50" action="#" method="post" th:action="@{/autores}" th:object="${autor}">
+	<form class="card p-4 form-group m-3 w-50" action="#" method="post" th:action="@{/autores}" th:object="${autor}">
 		<input type="hidden" th:field="*{id}">
 		<label for="nombre">Nombre:</label>
 		<input class="form-control" th:field="*{nombre}" type="text" id="nombre" nombre="nombre">
@@ -18,7 +19,8 @@
 		<input class="form-control" th:field="*{fechaNacimiento}" type="date" id="fechaNacimiento" nombre="fechaNacimiento">
 		<button type="submit" class="btn btn-info mt-2">Guardar</button>
 	</form>
-
+	</div>
+	<nav th:replace="fragments/footer" />
 </body>
 
 </html>

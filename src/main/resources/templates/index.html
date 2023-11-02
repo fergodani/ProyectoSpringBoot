@@ -3,7 +3,7 @@
 
 <nav th:replace="fragments/head" />
 
-<body>
+<body class="text-center">
 	<nav th:replace="fragments/nav" />
 
 	<p class="ml-3 mt-3">
@@ -11,11 +11,6 @@
 		<b th:inline="text">[[${name}]]</b>
 	</p>
 
-	<div th:if="${error != null}">
-		<div class="alert alert-danger" role="alert">
-			<p>[[${error}]]</p>
-		</div>
-	</div>
 	<h1 class="ml-3 mt-3">Biblioteca</h1>
 
 		<div class="d-flex flex-wrap justify-content-center align-items-center">
@@ -35,6 +30,7 @@
 		</div>
 	</div>
 	</section>
+	<nav th:replace="fragments/footer" />
 </body>
 
 </html>

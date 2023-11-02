@@ -47,6 +47,15 @@ public class Libro {
 	@JsonManagedReference
 	private Set<Copia> copias;
 	
+	public Libro() {
+		super();
+	}
+	
+	public Libro(String titulo) {
+		super();
+		this.titulo = titulo;
+	}
+
 	public Set<Copia> getCopias() {
 		return copias;
 	}

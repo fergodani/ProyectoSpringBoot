@@ -113,6 +113,7 @@ public class Lector {
 		}
 	}
 	
+	
 	public void multar(int dias) {
 		Calendar calendar = Calendar.getInstance();
 		if (this.getMulta() != null) {

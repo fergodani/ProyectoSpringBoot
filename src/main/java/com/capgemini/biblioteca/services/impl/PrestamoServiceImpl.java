@@ -1,6 +1,7 @@
 package com.capgemini.biblioteca.services.impl;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -43,7 +44,6 @@ public class PrestamoServiceImpl implements PrestamoService  {
 
 	@Override
 	public List<Prestamo> findAll() {
-		
 		return this.prestamoRepository.findAll();
 	}
 
@@ -96,14 +96,20 @@ public class PrestamoServiceImpl implements PrestamoService  {
 		
 		// 1. Filtrar los préstamos que no han sido devueltos
 		List<Prestamo> prestamosNoDevueltos = lector.getPrestamos().stream().filter(p -> p.getCopia() != null).toList();
+		for (Prestamo prestamo : prestamosNoDevueltos) {
+			if (prestamo.getFin().before(new Date(2023, 11, 6))) {
+				prestamo.getCopia().setEstadoCopia(EstadoCopia.RETRASO);
+				this.prestamoRepository.save(prestamo);
+			}
+		}
 		if (prestamosNoDevueltos.size() == 0)
 			return;
 		
 		// 2. Seleccionar aquel cuya fecha de fin sea la más antigua
 		prestamosNoDevueltos.stream().sorted((p1, p2) -> p1.getFin().compareTo(p2.getFin()));
 		LocalDate fechaPrestamo = prestamosNoDevueltos.get(0).getFin().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-		LocalDate fechaActual = LocalDate.now();
-//		LocalDate fechaActual = LocalDate.of(2023, 11, 5);
+//		LocalDate fechaActual = LocalDate.now();
+		LocalDate fechaActual = LocalDate.of(2023, 11, 12);
 		
 		// 3. Ver la diferencia de días de dicha fecha con la actual y multar
 		long diasDeDiferencia = fechaPrestamo.until(fechaActual, java.time.temporal.ChronoUnit.DAYS);
@@ -131,8 +137,9 @@ public class PrestamoServiceImpl implements PrestamoService  {
 	}	
 
 	public List<Prestamo> findByLectorId(long lector_id) {
-		return this.prestamoRepository.findByLectorId(lector_id);
-
+		List<Prestamo> prestamos = this.prestamoRepository.findByLectorId(lector_id);
+		Collections.reverse(prestamos);
+		return prestamos;
 	}	
 	
 

@@ -1,5 +1,6 @@
 package com.capgemini.biblioteca.controllers;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -94,7 +95,7 @@ public class PrestamoController {
 	}
 
 	@GetMapping("/delete/{id}/{libro_id}")
-	public String deleteCurso(@PathVariable(value = "id") long id,
+	public String deletePrestamo(@PathVariable(value = "id") long id,
 			@PathVariable(value = "libro_id") long libro_id,
 			 HttpServletRequest request)
 	{
@@ -114,6 +115,12 @@ public class PrestamoController {
 		model.addAttribute("prestamo", prestamo);
 		model.addAttribute("lector", user.getLector());
 		model.addAttribute("user_id", user.getId());
+		if (user.getLector().getMulta() != null) {
+			LocalDate fechaFinMulta = user.getLector().getMulta().getfFin().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
+			LocalDate fechaActual = LocalDate.now();
+			long diasDeDiferencia = fechaActual.until(fechaFinMulta, java.time.temporal.ChronoUnit.DAYS);
+			model.addAttribute("dias_multa", diasDeDiferencia);
+		}
 		return "lector/crearPrestamo";
 	}
 	
