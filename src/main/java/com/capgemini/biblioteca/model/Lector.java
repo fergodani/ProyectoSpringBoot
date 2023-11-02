@@ -101,18 +101,16 @@ public class Lector {
 		this.prestamos = prestamos;
 	}
 	
-	public Prestamo devolver(long id) {
+	public void devolver(long id) {
 		if (this.getPrestamos().size() == 0)
-			return null;
+			return;
 		
 		for (Prestamo prestamo : prestamos) {
 			if (prestamo.getId() == id) {
 				prestamo.getCopia().setEstadoCopia(EstadoCopia.BIBLIOTECA);
 				prestamo.setCopia(null);
-			}
-			return prestamo;	
+			}	
 		}
-		return null;
 	}
 	
 	public void multar(int dias) {
@@ -130,7 +128,6 @@ public class Lector {
 			multa.setfFin(calendar.getTime());
 			this.setMulta(multa);
 		}
-		
 	}
 
 }

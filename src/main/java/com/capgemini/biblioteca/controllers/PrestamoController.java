@@ -72,9 +72,23 @@ public class PrestamoController {
 		if (p.getInicio().after(p.getFin())) {
 			return "error";
 		}else {
-			prestamoService.saveEntity(p, libro_id);
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+			long lector_id = user.getLector().getNSocio();
+			try {
+				prestamoService.saveEntity(p, libro_id);
+			} catch (RuntimeException r){
+				Libro libro = this.libroService.getEntityById(libro_id);
+				Prestamo prestamo = new Prestamo();
+				model.addAttribute("error", r.getMessage());
+				model.addAttribute("libro", libro);
+				model.addAttribute("prestamo", prestamo);
+				model.addAttribute("lector", user.getLector());
+				model.addAttribute("user_id", user.getId());
+				return "lector/crearPrestamo";
+			}
 		
-			return "redirect:/libros/" + libro_id;
+			return "redirect:/prestamos/" + lector_id;
 		}
 			
 	}
@@ -96,7 +110,6 @@ public class PrestamoController {
 		Libro libro = this.libroService.getEntityById(libro_id);
 		Prestamo prestamo = new Prestamo();
 		prestamo.setLector(user.getLector());
-		System.out.println(prestamo.getLector());
 		model.addAttribute("libro", libro);
 		model.addAttribute("prestamo", prestamo);
 		model.addAttribute("lector", user.getLector());
