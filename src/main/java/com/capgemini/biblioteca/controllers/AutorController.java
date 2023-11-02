@@ -3,24 +3,23 @@ package com.capgemini.biblioteca.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.biblioteca.model.Autor;
-import com.capgemini.biblioteca.model.Libro;
 import com.capgemini.biblioteca.services.AutorService;
 
 
 @Controller
 public class AutorController {
 
+	private static final int PAGE_SIZE = 4;
 	@Autowired
 	private AutorService autorService;
 	
@@ -33,9 +32,10 @@ public class AutorController {
 		
 	@GetMapping("/autores")
 	public String getAutores(Model model) {
-		List<Autor> autores = this.autorService.findAll();
-		model.addAttribute("autores", autores);
-		return "admin/autores";
+//		List<Autor> autores = this.autorService.findAll();
+//		model.addAttribute("listaAutores", autores);
+//		return "admin/autores";ç
+		return findPaginated(1, "nombre", "asc", model);
 	}
 	
 	@GetMapping("/autores/crear")
@@ -65,5 +65,33 @@ public class AutorController {
 		autorService.deleteEntity(id);
 		return "redirect:/autores";
 	}
+	
+	//Método para paginacion
+		@GetMapping("/autores/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
+		public String findPaginated(@PathVariable(value="pageNo") int pageNo,
+				@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
+				@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
+				Model model 
+				)
+		{
+		
+			int pageSize = PAGE_SIZE;
+			Page<Autor> page=autorService.findPaginated(pageNo, pageSize, sortField, sortDir);
+			//Luego creamos lista de autores
+			List<Autor> listaAutores = page.getContent();
+			
+			//Agregamos al modelo atributos que leemos de html
+			model.addAttribute("sortDir", sortDir);
+			model.addAttribute("sortField", sortField);
+			model.addAttribute("currentPage", pageNo);
+			model.addAttribute("totalPages", page.getTotalPages());//Total de páginas
+			model.addAttribute("totalItems",page.getTotalElements());//Total de cursos en cada colección
+			model.addAttribute("listaAutores", listaAutores);	
+			model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+			//Este ultimo, si es ascendente que lo ponga al reves y si no lo deje como estaba
+			
+			//Todos estos valores estaran en el html
+			return "admin/autores";
+		}
 	
 }

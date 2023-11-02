@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.capgemini.biblioteca.model.Autor;
 import com.capgemini.biblioteca.model.Copia;
@@ -88,20 +90,20 @@ public class LibroController {
 	
 	@GetMapping("/libros")
 	public String getLibros(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
-		List<Libro> libros = this.libroService.findAll();
-		model.addAttribute("listaLibros", libros);
-		model.addAttribute("name", user.getName());
-		model.addAttribute("user_id", user.getId());
-		return "index";
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+//		List<Libro> libros = this.libroService.findAll();
+//		model.addAttribute("listaLibros", libros);
+//		model.addAttribute("name", user.getName());
+//		model.addAttribute("user_id", user.getId());
+		return findLibrosPaginated(1, "titulo", "asc", model);
 	}
 	
 	@GetMapping("/libros/editar")
 	public String getEditarLibros(Model model) {
-		List<Libro> libros = this.libroService.findAll();
-		model.addAttribute("listaLibros2", libros);
-		return "admin/libros";
+//		List<Libro> libros = this.libroService.findAll();
+//		model.addAttribute("listaLibros", libros);
+		return findPaginated(1, "titulo", "asc", model);
 	}
 	
 	
@@ -130,4 +132,71 @@ public class LibroController {
 	public String getError() {
 		return "error";
 	}
+	
+	//Método para paginacion
+	@GetMapping("/libros/editar/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
+	public String findPaginated(@PathVariable(value="pageNo") int pageNo,
+			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
+			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
+			Model model 
+			)
+	{
+		int pageSize = 4;
+		Page<Libro> page=libroService.findPaginated(pageNo, pageSize, sortField, sortDir);
+		//Luego creamos coleccion de cursos
+		List<Libro> listLibros = page.getContent();	
+		
+		//Agregamos al modelo atributos que leemos de html
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages() );//Total de páginas
+		model.addAttribute("totalItems",page.getTotalElements());//Total de cursos en cada colección
+		//Le paso lo que necesita el libro
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+		model.addAttribute("name", user.getName());
+		model.addAttribute("user_id", user.getId());
+		model.addAttribute("listaLibrosPag", listLibros);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		//Este ultimo, si es ascendente que lo ponga al reves y si no lo deje como estaba
+		
+		//Todos estos valores estaran en el index
+		return "admin/libros";
+	}
+	
+	
+	//Método para paginacion
+	@GetMapping("/libros/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
+	public String findLibrosPaginated(@PathVariable(value="pageNo") int pageNo,
+			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
+			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
+			Model model 
+			)
+	{
+		int pageSize = 12;
+		Page<Libro> page=libroService.findPaginated(pageNo, pageSize, sortField, sortDir);
+		//Luego creamos coleccion de cursos
+		List<Libro> listLibros = page.getContent();	
+		
+		//Agregamos al modelo atributos que leemos de html
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages() );//Total de páginas
+		model.addAttribute("totalItems",page.getTotalElements());//Total de cursos en cada colección
+		//Le paso lo que necesita el libro
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+		model.addAttribute("name", user.getName());
+		model.addAttribute("user_id", user.getId());
+		model.addAttribute("listaLibrosPag", listLibros);
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+		//Este ultimo, si es ascendente que lo ponga al reves y si no lo deje como estaba
+		
+		//Todos estos valores estaran en el index
+		return "index";
+	}
+	
+	
 }
