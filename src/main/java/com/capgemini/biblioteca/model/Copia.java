@@ -39,6 +39,14 @@ public class Copia {
 	@OneToMany(mappedBy = "copia", targetEntity = Prestamo.class)
 	@JsonManagedReference
 	private Set<Prestamo> prestamos;
+	
+	public Copia() {
+		super();
+	}
+	
+	public Copia(Libro libro) {
+		this.libro = libro;
+	}
 
 	public Long getId() {
 		return id;

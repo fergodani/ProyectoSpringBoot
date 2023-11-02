@@ -3,7 +3,7 @@
 
 <nav th:replace="fragments/head" />
 
-<body>
+<body class="text-center">
 	<nav th:replace="fragments/nav" />
 
 	<p class="ml-3 mt-3">
@@ -11,15 +11,9 @@
 		<b th:inline="text">[[${name}]]</b>
 	</p>
 
-	<div th:if="${error != null}">
-		<div class="alert alert-danger" role="alert">
-			<p>[[${error}]]</p>
-		</div>
-	</div>
 	<h1 class="ml-3 mt-3">Biblioteca</h1>
-	<a href="/libros/create" class="btn btn-primary ml-5 mt-2" sec:authorize="hasRole('ADMIN')">Agregar libro</a>
 
-		<div class="d-flex flex-wrap">
+		<div class="d-flex flex-wrap justify-content-center align-items-center">
 
 		<div th:each="libro:${listaLibros}" class="card m-2" style="width: 18rem;">
 			<div class="card-body">
@@ -36,6 +30,7 @@
 		</div>
 	</div>
 	</section>
+	<nav th:replace="fragments/footer" />
 </body>
 
 </html>

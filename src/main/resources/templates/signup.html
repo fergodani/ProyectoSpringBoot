@@ -5,64 +5,57 @@
 
 <body>
 	<nav th:replace="fragments/nav" />
-	<h2 class="m-3">Regístra un nuevo usuario</h2>
-	<form class="form-horizontal m-3" method="post" th:action="@{/signup}" th:object="${user}">
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="username">Nombre de usuario:</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="username" name="username" placeholder="99999999Y"
+	<a href="/login" class="btn btn-primary mt-2 ml-2">Volver</a>
+	<div class="d-flex flex-column justify-content-center align-items-center text-center">
+		<h2 class="m-3">Regístra un nuevo usuario</h2>
+		<form class="card form-row m-3 d-flex flex-column p-4" method="post" th:action="@{/signup}" th:object="${user}">
+			<div class="form-group">
+				<label class="control-label" for="username">Nombre de usuario:</label>
+				<input type="text" class="form-control" id="username" name="username" placeholder="dani"
 					required />
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="name">Nombre:</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="name" name="name" placeholder="Ejemplo: Juan José"
-					required />
+			<div class="form-row">
+				<div class="form-group  col-md-6">
+					<label class="control-label" for="name">Nombre:</label>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Ejemplo: Juan José"
+						required />
+				</div>
+				<div class="form-group  col-md-6">
+					<label class="control-label" for="lastName">Apellidos:</label>
+					<input type="text" class="form-control" id="lastName" name="lastName"
+						placeholder="Ejemplo: Peréz Almonte" required />
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="lastName">Apellidos:</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="lastName" name="lastName"
-					placeholder="Ejemplo: Peréz Almonte" required />
+			<div class="form-row">
+				<div class="form-group  col-md-6">
+					<label class="control-label" for="telefono">Teléfono:</label>
+					<input type="text" class="form-control" id="telefono" name="telefono" placeholder="622553993"
+						required />
+				</div>
+				<div class="form-group  col-md-6">
+					<label class="control-label" for="direccion">Dirección:</label>
+					<input type="text" class="form-control" id="direccion" name="direccion"
+						placeholder="Calle Victor Hevia" required />
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="telefono">Teléfono:</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="telefono" name="telefono" placeholder="622553993"
-					required />
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="direccion">Dirección:</label>
-			<div class="col-sm-10">
-				<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Calle Victor Hevia"
-					required />
-			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="password">Password:</label>
-			<div class="col-sm-10">
+			<div class="form-group">
+				<label class="control-label" for="password">Password:</label>
 				<input type="password" class="form-control" id="password" name="password"
-					placeholder="Entre el Password" />
+					placeholder="Contraseña" />
 			</div>
-		</div>
-		<div class="form-group">
-			<label class="control-label col-sm-2" for="passwordConfirm">Repita
-				el Password:</label>
-			<div class="col-sm-10">
+			<div class="form-group">
+				<label class="control-label" for="passwordConfirm">Repita
+					la contraseña:</label>
 				<input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm"
 					placeholder="Repita el Password" />
 			</div>
-		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
+			<div class="form-group">
 				<button type="submit" class="btn btn-primary">Enviar</button>
 			</div>
-		</div>
-	</form>
+		</form>
+		
+	</div>
+	<nav th:replace="fragments/footer" />
 </body>
 
 </html>
