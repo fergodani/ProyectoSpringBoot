@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <nav th:replace="fragments/head" />
+
 <body>
 	<nav th:replace="fragments/nav" />
-<h1 class="m-2">Mis préstamos</h1>
-<div class="container">
-	<a href="/" class="btn btn-primary mb-3">Volver</a>
+	<h1 class="m-2">Mis préstamos</h1>
+	<div class="container">
+		<a href="/" class="btn btn-primary mb-3">Volver</a>
 		<table class="table table-striped table-responsive-md">
 			<thead>
 				<tr>
@@ -21,19 +22,52 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="prestamo:${prestamos}">
+				<tr th:each="prestamo:${listaPrestamos}">
 					<td th:text="${prestamo.titulo_libro}"></td>
 					<td th:text="${prestamo.inicio}"></td>
 					<td th:text="${prestamo.fin}"></td>
 					<td th:if="${prestamo.copia != null}">
-						<a th:href="@{'/prestamos/devolver/' + ${lector_id} + '/' + ${prestamo.id}}" class="btn btn-primary">Devolver</a>
+						<a th:href="@{'/prestamos/devolver/' + ${lector_id} + '/' + ${prestamo.id}}"
+							class="btn btn-primary">Devolver</a>
 					</td>
 					<td th:if="${prestamo.copia == null}">
-						<a th:href="@{'/prestamos/devolver/' + ${lector_id} + '/' + ${prestamo.id}}" class="btn btn-primary disabled">Devolver</a>
+						<a th:href="@{'/prestamos/devolver/' + ${lector_id} + '/' + ${prestamo.id}}"
+							class="btn btn-primary disabled">Devolver</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		<!-- Botonera para moverme entre las paginas -->
+		<div th:if="${totalPages > 1}" class="container">
+			<!-- Si hay más de una página, aparece la botonera, si no, no aparece (claridad) -->
+			<div class="row col-sm-10"><!-- Una fila con varias columnas-->
+				<div class="col-sm-5">Total de filas: [[${totalItems}]]</div>
+				<!-- El enlace en texto en tylh es con [] -->
+				<div class="col-sm-3">
+					<span th:each="i:${#numbers.sequence(1,totalPages)}">
+						<a th:if="${currentPage != 1}"
+							th:href="@{'/prestamos/' + ${lector_id} + '/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+							<!--Le paso la ruta para que vaya a la página correspondiente -->
+							[[${i}]]
+						</a>
+						<span th:unless="${currentPage != 1}"> [[${i}]]</span>
+					</span>
+				</div><!-- Cierra el col-sm-3 -->
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/prestamos/' + ${lector_id} + '/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+						Proxima
+					</a>
+				</div>
+				<div class="col-sm-1">
+					<a th:if="${currentPage < totalPages}"
+						th:href="@{'/prestamos/' + ${lector_id} + '/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
+						Última
+					</a>
+				</div>
+			</div> <!-- Cierra el row -->
+		</div> <!-- Cierra el if -->
 	</div>
 </body>
+
 </html>

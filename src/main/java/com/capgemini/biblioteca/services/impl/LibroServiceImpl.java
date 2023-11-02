@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.biblioteca.model.Copia;
@@ -55,5 +59,33 @@ public class LibroServiceImpl implements LibroService {
 		else
 			throw new RuntimeException("No se encuentra el autor con id: " + id);
 		
+	}
+	
+	@Override
+	public Page<Libro> findPaginated(int pageNum, int pageSize, String sortField, String sortDirection) {
+		//If reducido --> variable = logica ? true: false
+				//Si la direccion es igual a "ASC" entonces los campos se ordenaran de manera ascendente y sino, descendentes
+				Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? 
+						Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+				
+				//Paginacion, le paso numero de pagina, su tamaño y la ordenacion previamente hecha
+				Pageable pageable = PageRequest.of(pageNum -1, pageSize, sort);
+				
+				//Finalmente retornamos mediante el metodo findAll que recibe la paginacion
+				return this.libroRepository.findAll(pageable);
+	}
+	
+	@Override
+	public Page<Libro> findLibrosPaginated(int pageNum, int pageSize, String sortField, String sortDirection) {
+		//If reducido --> variable = logica ? true: false
+				//Si la direccion es igual a "ASC" entonces los campos se ordenaran de manera ascendente y sino, descendentes
+				Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? 
+						Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+				
+				//Paginacion, le paso numero de pagina, su tamaño y la ordenacion previamente hecha
+				Pageable pageable = PageRequest.of(pageNum -1, pageSize, sort);
+				
+				//Finalmente retornamos mediante el metodo findAll que recibe la paginacion
+				return this.libroRepository.findAll(pageable);
 	}
 }
