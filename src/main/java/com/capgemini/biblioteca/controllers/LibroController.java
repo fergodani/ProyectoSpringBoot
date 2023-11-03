@@ -2,6 +2,7 @@ package com.capgemini.biblioteca.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -88,6 +89,35 @@ public class LibroController {
 		return "admin/crearLibro";
 	}
 	
+	@GetMapping("/libros")
+	public String getLibros(Model model) {
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+//		List<Libro> libros = this.libroService.findAll();
+//		model.addAttribute("listaLibros", libros);
+//		model.addAttribute("name", user.getName());
+//		model.addAttribute("user_id", user.getId());
+		return findLibrosPaginated(1, "titulo", "asc", model);
+	}
+	
+	@GetMapping("/libros/editar")
+	public String getEditarLibros(Model model) {
+//		List<Libro> libros = this.libroService.findAll();
+//		model.addAttribute("listaLibros", libros);
+		return findPaginated(1, "titulo", "asc", model);
+	}
+	
+	@GetMapping("/libros/editar/busq")
+	public String getEditarLibrosBusq(@RequestParam(value = "titulo", required = false) String titulo, Model model) {
+		List<Libro> libros = this.libroService.findAll();
+		if (titulo != null) {
+	        libros = libros.stream()
+	                .filter(p -> p.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
+	                .collect(Collectors.toList());
+	    }
+		model.addAttribute("listaLibrosPag", libros);
+		return "admin/libros";
+	}
 	
 	@GetMapping("/libros/update/{id}")
 	public String getEditorLibroForm(@PathVariable("id") long id, Model model) {
