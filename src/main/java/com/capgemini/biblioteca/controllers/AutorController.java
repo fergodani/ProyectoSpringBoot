@@ -30,13 +30,13 @@ public class AutorController {
 //		return "detalles_autor";
 //	}
 		
-	@GetMapping("/autores")
-	public String getAutores(Model model) {
-//		List<Autor> autores = this.autorService.findAll();
-//		model.addAttribute("listaAutores", autores);
-//		return "admin/autores";ç
-		return findPaginated(1, "nombre", "asc", model);
-	}
+//	@GetMapping("/autores")
+//	public String getAutores(Model model) {
+////		List<Autor> autores = this.autorService.findAll();
+////		model.addAttribute("listaAutores", autores);
+////		return "admin/autores";ç
+//		return findPaginated(1, "nombre", "asc", model);
+//	}
 	
 	@GetMapping("/autores/crear")
 	public String getCrearAutorForm(Model model) {
@@ -56,19 +56,20 @@ public class AutorController {
 	public String altaAutor(@ModelAttribute("autor") Autor autor)
 	{
 		autorService.saveEntity(autor);
-		return "redirect:/autores";
+		return "redirect:/autores?page=1&sortField=nombre&sortDir=asc";
 	}
 	
 	@GetMapping("/autores/delete/{id}")
 	public String delete(@PathVariable("id") long id) 
 	{
 		autorService.deleteEntity(id);
-		return "redirect:/autores";
+		return "redirect:/autores?page=1&sortField=nombre&sortDir=asc";
 	}
 	
 	//Método para paginacion
-		@GetMapping("/autores/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
-		public String findPaginated(@PathVariable(value="pageNo") int pageNo,
+		@GetMapping("/autores")//Asociacion de este nº de page con la que usa el metodo
+		public String findPaginated(
+				@RequestParam(value="page") int pageNo,
 				@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
 				@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
 				Model model 

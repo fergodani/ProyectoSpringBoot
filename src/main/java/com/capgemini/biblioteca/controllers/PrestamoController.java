@@ -43,19 +43,19 @@ public class PrestamoController {
 	private LectorService lectorService;
 
 
-	@GetMapping("/prestamos/{lector_id}")
-	public String getPrestamoByLectorId(@PathVariable("lector_id") long lector_id, Model model) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
-//		if (user.getId() != lector_id) {
-//			return "error";
-//		}
-//		List<Prestamo> prestamos = this.prestamoService.findByLectorId(lector_id);
-//		model.addAttribute("prestamos", prestamos);
-//		model.addAttribute("lector_id", lector_id);
-//		model.addAttribute("user_id", user.getId());
-		return findPaginated(lector_id, 1, "titulo_libro", "asc", model);
-	}
+//	@GetMapping("/prestamos/{lector_id}")
+//	public String getPrestamoByLectorId(@PathVariable("lector_id") long lector_id, Model model) {
+////		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+////		Usuario user = this.usuarioService.getUserByUsername(auth.getName());
+////		if (user.getId() != lector_id) {
+////			return "error";
+////		}
+////		List<Prestamo> prestamos = this.prestamoService.findByLectorId(lector_id);
+////		model.addAttribute("prestamos", prestamos);
+////		model.addAttribute("lector_id", lector_id);
+////		model.addAttribute("user_id", user.getId());
+//		return findPaginated(lector_id, 1, "titulo_libro", "asc", model);
+//	}
 
 	@PostMapping("/prestamos/crear")
 	public String altaPrestamo(
@@ -124,15 +124,15 @@ public class PrestamoController {
 		Lector lector = this.lectorService.getEntityById(lector_id);
 		lector.devolver(prestamo_id);
 		this.lectorService.saveEntity(lector);
-		return "redirect:/prestamos/" + lector_id;
+		return "redirect:/prestamos/" + lector_id + "?page=1&sortField=titulo_libro&sortDir=asc";
 	}
 
 	
 	//Método para paginacion
-	@GetMapping("/prestamos/{lector_id}/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
+	@GetMapping("/prestamos/{lector_id}")//Asociacion de este nº de page con la que usa el metodo
 	public String findPaginated(
 			@PathVariable("lector_id") long lector_id,
-			@PathVariable(value="pageNo") int pageNo,
+			@RequestParam(value="page") int pageNo,
 			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
 			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
 			Model model 

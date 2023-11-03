@@ -40,7 +40,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @SpringBootTest
 @ContextConfiguration(classes = { WebSecurityConfig.class, BibliotecaApplication.class })
 @AutoConfigureMockMvc
-//@TestPropertySource("../../../../../../main/resources/application.properties")
 public class RestControllerTests {
 
 	@Autowired
