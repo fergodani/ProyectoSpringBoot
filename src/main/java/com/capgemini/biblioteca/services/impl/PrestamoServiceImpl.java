@@ -101,7 +101,7 @@ public class PrestamoServiceImpl implements PrestamoService  {
 		// 1. Filtrar los préstamos que no han sido devueltos
 		List<Prestamo> prestamosNoDevueltos = lector.getPrestamos().stream().filter(p -> p.getCopia() != null).toList();
 		for (Prestamo prestamo : prestamosNoDevueltos) {
-			if (prestamo.getFin().before(new Date(2023, 11, 6))) {
+			if (prestamo.getFin().before(new Date())) {
 				prestamo.getCopia().setEstadoCopia(EstadoCopia.RETRASO);
 				this.prestamoRepository.save(prestamo);
 			}
@@ -112,8 +112,8 @@ public class PrestamoServiceImpl implements PrestamoService  {
 		// 2. Seleccionar aquel cuya fecha de fin sea la más antigua
 		prestamosNoDevueltos.stream().sorted((p1, p2) -> p1.getFin().compareTo(p2.getFin()));
 		LocalDate fechaPrestamo = prestamosNoDevueltos.get(0).getFin().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-//		LocalDate fechaActual = LocalDate.now();
-		LocalDate fechaActual = LocalDate.of(2023, 11, 12);
+		LocalDate fechaActual = LocalDate.now();
+//		LocalDate fechaActual = LocalDate.of(2023, 11, 12);
 		
 		// 3. Ver la diferencia de días de dicha fecha con la actual y multar
 		long diasDeDiferencia = fechaPrestamo.until(fechaActual, java.time.temporal.ChronoUnit.DAYS);

@@ -73,7 +73,7 @@ public class PrestamoController {
 			return "lector/crearPrestamo";
 		}
 
-		return "redirect:/prestamos/" + lector_id;
+		return "redirect:/prestamos/" + lector_id + "?page=1&sortField=titulo_libro&sortDir=asc";
 
 	}
 
