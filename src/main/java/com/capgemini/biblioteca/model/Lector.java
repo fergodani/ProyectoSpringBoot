@@ -1,5 +1,7 @@
 package com.capgemini.biblioteca.model;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Set;
 
 import com.capgemini.biblioteca.model.enums.EstadoCopia;
@@ -99,18 +101,34 @@ public class Lector {
 		this.prestamos = prestamos;
 	}
 	
-	public Prestamo devolver(long id) {
+	public void devolver(long id) {
 		if (this.getPrestamos().size() == 0)
-			return null;
+			return;
 		
 		for (Prestamo prestamo : prestamos) {
 			if (prestamo.getId() == id) {
 				prestamo.getCopia().setEstadoCopia(EstadoCopia.BIBLIOTECA);
 				prestamo.setCopia(null);
-			}
-			return prestamo;	
+			}	
 		}
-		return null;
+	}
+	
+	
+	public void multar(int dias) {
+		Calendar calendar = Calendar.getInstance();
+		if (this.getMulta() != null) {
+			calendar.setTime(this.getMulta().getfFin());
+			calendar.add(Calendar.DAY_OF_MONTH, dias);
+			this.getMulta().setfFin(calendar.getTime());
+		} else {
+			Multa multa = new Multa();
+			Date actual = new Date();
+			calendar.setTime(actual);
+			multa.setfInicio(actual);
+			calendar.add(Calendar.DAY_OF_MONTH, dias);
+			multa.setfFin(calendar.getTime());
+			this.setMulta(multa);
+		}
 	}
 
 }

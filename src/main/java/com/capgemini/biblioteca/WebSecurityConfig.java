@@ -77,9 +77,12 @@ public class WebSecurityConfig {
 			.requestMatchers("/").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros/create").hasAnyRole("ADMIN")
+			.requestMatchers("/libros/page/**").hasAnyRole("ADMIN", "LECTOR")
 			.requestMatchers("/libros/**").hasAnyRole("ADMIN")
 			.requestMatchers("/lectores").hasAnyRole("ADMIN")
 			.requestMatchers("/lectores/**").hasAnyRole("ADMIN")
+			.requestMatchers("/autores/page/{pageNo}").hasAnyRole("ADMIN", "LECTOR")
+			.requestMatchers("/autores/filtro").hasAnyRole("ADMIN")
 			.requestMatchers("/autores/**").hasAnyRole("ADMIN")
 			.requestMatchers("/libros/{id}").hasAnyRole("ADMIN")
 			.requestMatchers("/signup").permitAll()
@@ -91,6 +94,8 @@ public class WebSecurityConfig {
 		)
 		.formLogin((form) -> form
 			.loginPage("/login")
+			.defaultSuccessUrl("/")
+			.failureUrl("/login?error=true")
 			.permitAll()
 		)
 		.logout((logout) -> logout.logoutUrl("/logout").logoutSuccessUrl("/login").permitAll());

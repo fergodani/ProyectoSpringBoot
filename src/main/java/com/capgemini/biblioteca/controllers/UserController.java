@@ -23,7 +23,6 @@ public class UserController {
 	@Autowired
 	private LectorService lectorService;
 
-
 	@Autowired
 	private UsuarioService usersService;
 
@@ -48,20 +47,27 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
-    public String signup(@Validated Usuario user, BindingResult result) {
-        signUpFormValidator.validate(user, result);
-        if (result.hasErrors()) {
-            return "signup";
-        }
-        Lector lector = new Lector();
-        lector.setNombre(user.getName());
-        lector.setDireccion(user.getDireccion());
-        user.setRole(rolesService.getRoles()[0]);
-        user.setLector(lector);
-        lectorService.saveEntity(lector);
-        usersService.saveEntity(user);
-        securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
-        return "redirect:/";
-    }
+	public String signup(@Validated Usuario user, BindingResult result) {
+		signUpFormValidator.validate(user, result);
+		if (result.hasErrors()) {
+			return "signup";
+		}
+
+		Lector lector = new Lector();
+
+		if (user.getUsername().equals("admin")) {
+			user.setRole(rolesService.getRoles()[1]);
+		} else {
+			user.setRole(rolesService.getRoles()[0]);
+		}
+		lector.setNombre(user.getName());
+		lector.setDireccion(user.getDireccion());
+
+		user.setLector(lector);
+		lectorService.saveEntity(lector);
+		usersService.saveEntity(user);
+		securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
+		return "redirect:/";
+	}
 
 }
