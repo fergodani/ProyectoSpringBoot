@@ -30,13 +30,33 @@ public class AutorController {
 //		return "detalles_autor";
 //	}
 		
+	@GetMapping("/autores/filtros/page/{pageNo}")
+	public String getAutoresFiltro(@RequestParam(value = "nacionalidad", required = false) String nacionalidad,
+			@PathVariable(value="pageNo") int pageNo,
+			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
+			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html 
+			Model model) {
+		int pageSize = PAGE_SIZE;
+		//Luego creamos lista de autores
+		Page<Autor> page = this.autorService.filtroAutor(pageNo,pageSize, sortField, sortDir, nacionalidad); // Obtén tus datos de alguna fuente
+		
+		List<Autor> listaAutores = page.getContent();
+		model.addAttribute("sortDir", sortDir);
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());//Total de páginas
+		model.addAttribute("totalItems",page.getTotalElements());//Total de cursos en cada colección
+		model.addAttribute("listaAutores", listaAutores);	
+		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+	    model.addAttribute("listaAutores", listaAutores);
+		return "admin/autores";
+	}
+	
 	@GetMapping("/autores")
 	public String getAutores(Model model) {
-//		List<Autor> autores = this.autorService.findAll();
-//		model.addAttribute("listaAutores", autores);
-//		return "admin/autores";ç
 		return findPaginated(1, "nombre", "asc", model);
 	}
+	
 	
 	@GetMapping("/autores/crear")
 	public String getCrearAutorForm(Model model) {

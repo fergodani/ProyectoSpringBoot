@@ -66,4 +66,18 @@ public class AutorServiceImpl implements AutorService {
 				return this.autorRepository.findAll(pageable);
 	}
 
+	@Override
+	public Page<Autor> filtroAutor(int pageNum, int pageSize, String sortField, String sortDirection, String nacionalidad) {
+		//If reducido --> variable = logica ? true: false
+		//Si la direccion es igual a "ASC" entonces los campos se ordenaran de manera ascendente y sino, descendentes
+		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? 
+				Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+		
+		//Paginacion, le paso numero de pagina, su tamaño y la ordenacion previamente hecha
+		Pageable pageable = PageRequest.of(pageNum -1, pageSize, sort);
+		
+		//Finalmente retornamos mediante el metodo findAll que recibe la paginacion
+		return this.autorRepository.filtroAutor(pageable, nacionalidad);
+	}
+
 }
