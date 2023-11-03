@@ -17,7 +17,7 @@
 			<select hidden th:field="*{lector}" class="form-control mb-2">
 				<option th:value="${lector.nSocio}" th:text="${lector.nombre}"></option>
 			</select>
-			<button type="submit" class="btn btn-primary">Crear préstamo</button>
+			<button type="submit" class="btn btn-primary" id="crear">Crear préstamo</button>
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 		</form>
 		<div th:if="${dias_multa}">
