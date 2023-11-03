@@ -13,13 +13,20 @@
 			<thead>
 				<tr>
 					<th>
+						<a th:href="@{'/prestamos/' + ${lector_id} + '?page=' + ${currentPage} + '&sortField=titulo_libro&sortDir=' + ${reverseSortDir}}">
 						Título
+						</a>
 					</th>
 					<th>
+						<a th:href="@{'/prestamos/' + ${lector_id} + '?page=' + ${currentPage} + '&sortField=inicio&sortDir=' + ${reverseSortDir}}">
 						Fecha de inicio
+						</a>
+						
 					</th>
 					<th>
+						<a th:href="@{'/prestamos/' + ${lector_id} + '?page=' + ${currentPage} + '&sortField=fin&sortDir=' + ${reverseSortDir}}">
 						Fecha de fin
+						</a>
 					</th>
 					<th>
 						Estado

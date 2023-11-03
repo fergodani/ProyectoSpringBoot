@@ -14,17 +14,17 @@
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/libros/editar/page/' + ${currentPage} + '?sortField=titulo&sortDir=' + ${reverseSortDir}}">
+						<a th:href="@{'/libros/editar?page=' + ${currentPage} + '&sortField=titulo&sortDir=' + ${reverseSortDir}}">
 						Título del libro
 						</a>
 					</th>
 					<th>
-						<a th:href="@{'/libros/editar/page/' + ${currentPage} + '?sortField=tipoLibro&sortDir=' + ${reverseSortDir}}">
+						<a th:href="@{'/libros/editar?page=' + ${currentPage} + '&sortField=tipoLibro&sortDir=' + ${reverseSortDir}}">
 						Tipo libro
 						</a>
 					</th>
 					<th>
-						<a th:href="@{'/libros/editar/page/' + ${currentPage} + '?sortField=anyo&sortDir=' + ${reverseSortDir}}">
+						<a th:href="@{'/libros/editar?page=' + ${currentPage} + '&sortField=anyo&sortDir=' + ${reverseSortDir}}">
 						Año publicación
 						</a>
 					</th>

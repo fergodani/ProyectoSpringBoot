@@ -10,17 +10,17 @@
 			<thead>
 				<tr>
 					<th>
-						<a th:href="@{'/lectores/page/' + ${currentPage} + '?sortField=nombre&sortDir=' + ${reverseSortDir}}">
+						<a th:href="@{'/lectores?page=' + ${currentPage} + '&sortField=nombre&sortDir=' + ${reverseSortDir}}">
 						Nombre
 						</a>
 					</th>
 					<th>
-						<a th:href="@{'/lectores/page/' + ${currentPage} + '?sortField=telefono&sortDir=' + ${reverseSortDir}}">
+						<a th:href="@{'/lectores?page=' + ${currentPage} + '&sortField=telefono&sortDir=' + ${reverseSortDir}}">
 						Teléfono
 						</a>
 					</th>
 					<th>
-						<a th:href="@{'/lectores/page/' + ${currentPage} + '?sortField=direccion&sortDir=' + ${reverseSortDir}}">
+						<a th:href="@{'/lectores?page=' + ${currentPage} + '&sortField=direccion&sortDir=' + ${reverseSortDir}}">
 						Dirección domicilio
 						</a>
 					</th>

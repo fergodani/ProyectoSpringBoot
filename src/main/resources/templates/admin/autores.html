@@ -25,19 +25,19 @@
 				<tr>
 					<th>
 						<a
-							th:href="@{'/autores/page/' + ${currentPage} + '?sortField=nombre&sortDir=' + ${reverseSortDir}}">
+							th:href="@{'/autores?page=' + ${currentPage} + '&sortField=nombre&sortDir=' + ${reverseSortDir}}">
 							Título del libro
 						</a>
 					</th>
 					<th>
 						<a
-							th:href="@{'/autores/page/' + ${currentPage} + '?sortField=nacionalidad&sortDir=' + ${reverseSortDir}}">
+							th:href="@{'/autores?page=' + ${currentPage} + '&sortField=nacionalidad&sortDir=' + ${reverseSortDir}}">
 							Nacionalidad
 						</a>
 					</th>
 					<th>
 						<a
-							th:href="@{'/autores/page/' + ${currentPage} + '?sortField=fechaNacimiento&sortDir=' + ${reverseSortDir}}">
+							th:href="@{'/autores?page=' + ${currentPage} + '&sortField=fechaNacimiento&sortDir=' + ${reverseSortDir}}">
 							Fecha de nacimiento
 						</a>
 					</th>
