@@ -11,7 +11,7 @@
 	
 	<form class="card p-4 form-group m-3 w-50" action="#" method="post" th:action="@{/libros}" th:object="${libro}">
 		<label for="titulo">Título</label>
-		<input class="form-control" th:field="*{titulo}" type="text" id="titulo" nombre="titulo">
+		<input class="form-control" th:field="*{titulo}" type="text" id="titulo" nombre="titulo" required>
 		<label for="anyo">Año</label>
 		<input class="form-control" th:field="*{anyo}" type="text" id="anyo" nombre="anyo">
 		<label for="tipoLibro">Tipo de libro</label>

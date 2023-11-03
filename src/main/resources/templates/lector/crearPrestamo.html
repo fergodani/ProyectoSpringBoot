@@ -12,7 +12,7 @@
 			style="width: 18rem;">
 			<label for="fecha-fin">Fecha de fin</label>
 			<input class="form-control mb-2" th:field="*{fin}" th:format="yyyy-MM-dd" th:placeholder="yyyy-MM-dd"
-				type="date" id="fecha-fin" nombre="fecha-fin">
+				type="date" id="fecha-fin" nombre="fecha-fin" required="true">
 			<input id="libro_id" name="libro_id" type="number" hidden th:value="${libro.id}" />
 			<select hidden th:field="*{lector}" class="form-control mb-2">
 				<option th:value="${lector.nSocio}" th:text="${lector.nombre}"></option>
