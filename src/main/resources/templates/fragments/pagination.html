@@ -1,0 +1,28 @@
+<div  th:if="${totalPages > 1}" class="text-center">
+    <ul class="pagination justify-content-center">
+        <!-- Primera -->
+        <li class="page-item" >
+            <a class="page-link" th:href="@{'?page=1' + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Primera</a>
+        </li>
+        <!-- Anterior (si la hay ) -->
+        <li class="page-item" th:if='${currentPage-1 >= 1}'>
+            <a class="page-link" th:href="@{'?page=' + ${currentPage - 1} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+               th:text="${currentPage-1}"></a>
+        </li>
+        <!-- Actual -->
+        <li class="page-item active" >
+            <a class="page-link"th:href="@{'?page=' + ${currentPage} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+               th:text="${currentPage}"></a>
+        </li>
+        <!-- Siguiente (si la hay) -->
+        <li class="page-item" th:if='${currentPage <= totalPages-1}'>
+            <a class="page-link" th:href="@{'?page=' + ${currentPage + 1} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+               th:text="${currentPage +1}"></a>
+        </li>
+        <!-- Última -->
+        <li class="page-item" >
+            <a class="page-link"
+               th:href="@{'?page=' + ${totalPages} + '&sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"> Última</a>
+        </li>
+    </ul>
+</div>

@@ -46,38 +46,9 @@
 				</tr>
 			</tbody>
 		</table>
-		<!-- Botonera para moverme entre las paginas -->
-		<div th:if="${totalPages > 1}" class="container">
-			<!-- Si hay más de una página, aparece la botonera, si no, no aparece (claridad) -->
-			<div class="row col-sm-10"><!-- Una fila con varias columnas-->
-				<div class="col-sm-5">Total de filas: [[${totalItems}]]</div>
-				<!-- El enlace en texto en tylh es con [] -->
-				<div class="col-sm-3">
-					<span th:each="i:${#numbers.sequence(1,totalPages)}">
-						<a th:if="${currentPage != 1}"
-							th:href="@{'/prestamos/' + ${lector_id} + '/page/' + ${i} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-							<!--Le paso la ruta para que vaya a la página correspondiente -->
-							[[${i}]]
-						</a>
-						<span th:unless="${currentPage != 1}"> [[${i}]]</span>
-					</span>
-				</div><!-- Cierra el col-sm-3 -->
-				<div class="col-sm-1">
-					<a th:if="${currentPage < totalPages}"
-						th:href="@{'/prestamos/' + ${lector_id} + '/page/' + ${currentPage + 1} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-						Proxima
-					</a>
-				</div>
-				<div class="col-sm-1">
-					<a th:if="${currentPage < totalPages}"
-						th:href="@{'/prestamos/' + ${lector_id} + '/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">
-						Última
-					</a>
-				</div>
-			</div> <!-- Cierra el row -->
-		</div> <!-- Cierra el if -->
+		<div th:replace="fragments/pagination" />
 	</div>
-	<nav th:replace="fragments/footer" />
+	<div th:replace="fragments/footer" />
 </body>
 
 </html>

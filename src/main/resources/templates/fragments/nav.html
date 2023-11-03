@@ -13,7 +13,7 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/autores/crear">Agregar autor</a>
-					<a class="dropdown-item" href="/autores">Ver autores</a>
+					<a class="dropdown-item" href="/autores?page=1&sortField=nombre&sortDir=asc">Ver autores</a>
 				</div>
 			</li>
 			<li id="marks-menu" class="nav-item dropdown active" sec:authorize="hasRole('ADMIN')">
@@ -22,14 +22,14 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="/libros/create">Agregar libro</a>
-					<a class="dropdown-item" href="/libros/editar">Ver libros</a>
+					<a class="dropdown-item" href="/libros/editar?page=1&sortField=titulo&sortDir=asc">Ver libros</a>
 				</div>
 			</li>
 			<li class="nav-item active" sec:authorize="hasRole('ADMIN')">
-				<a href="/lectores" class="nav-link">Lectores</a>
+				<a  href="/lectores?page=1&sortField=nombre&sortDir=asc" class="nav-link">Lectores</a>
 			</li>
 			<li class="nav-item active" sec:authorize="hasRole('LECTOR')">
-				<a th:href="@{'/prestamos/' + ${user_id}}" class="nav-link" sec:authorize="hasRole('LECTOR')">Mis
+				<a th:href="@{'/prestamos/' + ${user_id}} + '?page=1&sortField=titulo_libro&sortDir=desc'" class="nav-link" sec:authorize="hasRole('LECTOR')">Mis
 					préstamos</a>
 			</li>
 

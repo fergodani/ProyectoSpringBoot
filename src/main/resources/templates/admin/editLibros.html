@@ -13,7 +13,7 @@
 			<input type="hidden" th:field="*{id}">
 			<input type="hidden" th:field="*{autor}">
 			<label for="titulo">Título del libro:</label>
-			<input class="form-control" th:field="*{titulo}" type="text" id="titulo" nombre="titulo">
+			<input class="form-control" th:field="*{titulo}" type="text" id="titulo" nombre="titulo" required>
 			<label for="tipoLibro">Tipo de libro</label>
 			<select class="form-control" id="tipoLibro" name="tipoLibro" th:field="*{tipoLibro}">
 				<option value="NOVELA">Novela</option>

@@ -11,7 +11,7 @@
 
 		<form class="card p-5 form-group m-3 w-50" action="#" method="post" th:action="@{/autores}" th:object="${autor}">
 			<label for="nombre">Nombre:</label>
-			<input class="form-control" th:field="*{nombre}" type="text" id="nombre" nombre="nombre">
+			<input class="form-control" th:field="*{nombre}" type="text" id="nombre" nombre="nombre" required="true">
 			<label for="nacionalidad">Nacionalidad:</label>
 			<input class="form-control" th:field="*{nacionalidad}" type="text" id="nacionalidad" nombre="nacionalidad">
 			<label for="fechaNacimiento">Fecha de nacimiento:</label>

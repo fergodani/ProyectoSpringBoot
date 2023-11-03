@@ -55,8 +55,8 @@ public class LibroController {
 	
 		
 	@GetMapping("/")
-	public String getIndex() {
-		return "redirect:/libros";
+	public String getIndex(Model model) {
+		return "redirect:/libros?page=1&sortField=titulo&sortDir=asc";
 	}
 	
 	
@@ -119,7 +119,6 @@ public class LibroController {
 		return "admin/libros";
 	}
 	
-	
 	@GetMapping("/libros/update/{id}")
 	public String getEditorLibroForm(@PathVariable("id") long id, Model model) {
 		Libro libro = this.libroService.getEntityById(id);
@@ -147,8 +146,9 @@ public class LibroController {
 	}
 	
 	//Método para paginacion
-	@GetMapping("/libros/editar/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
-	public String findPaginated(@PathVariable(value="pageNo") int pageNo,
+	@GetMapping("/libros/editar")//Asociacion de este nº de page con la que usa el metodo
+	public String findPaginated(
+			@RequestParam(value="page") int pageNo,
 			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
 			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
 			Model model 
@@ -180,8 +180,9 @@ public class LibroController {
 	
 	
 	//Método para paginacion
-	@GetMapping("/libros/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
-	public String findLibrosPaginated(@PathVariable(value="pageNo") int pageNo,
+	@GetMapping("/libros")//Asociacion de este nº de page con la que usa el metodo
+	public String findLibrosPaginated(
+			@RequestParam(value="page") int pageNo,
 			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
 			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
 			Model model 

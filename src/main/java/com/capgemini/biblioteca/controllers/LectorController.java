@@ -28,14 +28,6 @@ public class LectorController {
 //		return "detalles_lector";
 //	}
 	
-	
-	@GetMapping("/lectores")
-	public String getLectores(Model model) {
-//		List<Lector> lectores = this.lectorService.findAll();
-//		model.addAttribute("listaLectores", lectores);
-		return findPaginated(1, "nombre", "asc", model);
-	}
-	
 	@GetMapping("/lectores/update/{id}")
 	public String getEditorLectorForm(@PathVariable("id") long id, Model model) {
 		Lector lector = this.lectorService.getEntityById(id);
@@ -48,19 +40,20 @@ public class LectorController {
 	public String altaLector(@ModelAttribute("lector") Lector l)
 	{
 		lectorService.saveEntity(l);
-		return "index";
+		return "redirect:/lectores?page=1&sortField=nombre&sortDir=asc";
 	}
 	
 	@GetMapping("/lectores/delete/{id}")
 	public String delete(@PathVariable("id") long id) 
 	{
 		lectorService.deleteEntity(id);
-		return "redirect:/lectores";
+		return "redirect:/lectores?page=1&sortField=nombre&sortDir=asc";
 	}
 	
 	//Método para paginacion
-	@GetMapping("/lectores/page/{pageNo}")//Asociacion de este nº de page con la que usa el metodo
-	public String findPaginated(@PathVariable(value="pageNo") int pageNo,
+	@GetMapping("/lectores")//Asociacion de este nº de page con la que usa el metodo
+	public String findPaginated(
+			@RequestParam(value="page") int pageNo,
 			@RequestParam("sortField") String sortField, //campo de ordenamiento que me pasa el html
 			@RequestParam("sortDir") String sortDir, //campo de direccion de ordenamiento que me pasa el html
 			Model model 
